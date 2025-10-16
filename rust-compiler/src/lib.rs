@@ -7,12 +7,17 @@ use anyhow::Result;
 use serde::{Deserialize, Serialize};
 use std::path::Path;
 
+// Quantum compilation module
+pub mod quantum;
+
 /// Compiler configuration
 #[derive(Debug, Clone, Serialize, Deserialize)]
 pub struct CompilerConfig {
     pub minify: bool,
     pub source_maps: bool,
     pub target: String,
+    pub quantum_mode: bool,
+    pub max_parallel_threads: Option<usize>,
 }
 
 impl Default for CompilerConfig {
@@ -21,6 +26,8 @@ impl Default for CompilerConfig {
             minify: false,
             source_maps: true,
             target: "es2022".to_string(),
+            quantum_mode: false,
+            max_parallel_threads: None,
         }
     }
 }
@@ -38,12 +45,29 @@ pub struct CompilationResult {
 /// Main compiler interface
 pub struct SynapseCompiler {
     config: CompilerConfig,
+    quantum_compiler: Option<quantum::QuantumCompiler>,
 }
 
 impl SynapseCompiler {
     /// Create a new compiler instance
     pub fn new(config: CompilerConfig) -> Result<Self> {
-        Ok(Self { config })
+        let quantum_compiler = if config.quantum_mode {
+            let quantum_config = quantum::QuantumConfig {
+                max_parallel_threads: config.max_parallel_threads.unwrap_or_else(|| num_cpus::get()),
+                enable_entanglement: true,
+                error_correction_level: 2,
+                enable_superposition: true,
+                cache_coherence_level: 3,
+            };
+            Some(quantum::QuantumCompiler::new(quantum_config))
+        } else {
+            None
+        };
+
+        Ok(Self { 
+            config,
+            quantum_compiler,
+        })
     }
 
     /// Compile a single file
@@ -64,6 +88,30 @@ impl SynapseCompiler {
             errors: vec![],
             warnings: vec![],
         })
+    }
+
+    /// Compile multiple files using quantum parallel processing
+    pub async fn compile_files_quantum(&self, file_paths: Vec<std::path::PathBuf>) -> Result<std::collections::HashMap<std::path::PathBuf, quantum::CompilationResult>> {
+        if let Some(ref quantum_compiler) = self.quantum_compiler {
+            quantum_compiler.compile_quantum_parallel(file_paths).await
+        } else {
+            Err(anyhow::anyhow!("Quantum mode not enabled. Set quantum_mode: true in config."))
+        }
+    }
+
+    /// Enable quantum compilation mode
+    pub fn enable_quantum_mode(&mut self) {
+        if self.quantum_compiler.is_none() {
+            let quantum_config = quantum::QuantumConfig {
+                max_parallel_threads: self.config.max_parallel_threads.unwrap_or_else(|| num_cpus::get()),
+                enable_entanglement: true,
+                error_correction_level: 2,
+                enable_superposition: true,
+                cache_coherence_level: 3,
+            };
+            self.quantum_compiler = Some(quantum::QuantumCompiler::new(quantum_config));
+            self.config.quantum_mode = true;
+        }
     }
 
     /// Get compiler version
