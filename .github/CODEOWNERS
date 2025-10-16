@@ -1,48 +1,76 @@
-# Global code owners
-* @synapse-framework/maintainers
+# Global owners
+* @synapse-framework/core-team
 
-# Core framework
-/packages/core/ @synapse-framework/core-team
-/src/ @synapse-framework/core-team
+# Core framework files
+/packages/core/ @synapse-framework/core-team @synapse-framework/architecture-team
+/src/ @synapse-framework/core-team @synapse-framework/architecture-team
+/rust-compiler/ @synapse-framework/core-team @synapse-framework/rust-team
 
-# CLI tool
-/packages/cli/ @synapse-framework/cli-team
-/scripts/ @synapse-framework/cli-team
+# CLI and tooling
+/packages/cli/ @synapse-framework/cli-team @synapse-framework/core-team
+/scripts/ @synapse-framework/devops-team @synapse-framework/core-team
 
-# Compiler
-/packages/compiler/ @synapse-framework/compiler-team
-/rust-compiler/ @synapse-framework/compiler-team
+# UI and components
+/packages/ui/ @synapse-framework/ui-team @synapse-framework/design-team
+/website/ @synapse-framework/ui-team @synapse-framework/design-team
+/storybook/ @synapse-framework/ui-team @synapse-framework/design-team
 
-# UI library
-/packages/ui/ @synapse-framework/ui-team
-/website/ @synapse-framework/ui-team
-
-# Mobile support
-/packages/mobile/ @synapse-framework/mobile-team
-
-# Testing
-/packages/testing/ @synapse-framework/testing-team
-/test-*.js @synapse-framework/testing-team
+# Testing and quality
+/packages/testing/ @synapse-framework/qa-team @synapse-framework/core-team
+/test-*.js @synapse-framework/qa-team @synapse-framework/core-team
+*.test.js @synapse-framework/qa-team @synapse-framework/core-team
+*.spec.js @synapse-framework/qa-team @synapse-framework/core-team
 
 # Documentation
-/docs/ @synapse-framework/docs-team
-*.md @synapse-framework/docs-team
-
-# CI/CD
-/.github/ @synapse-framework/devops-team
-/Dockerfile @synapse-framework/devops-team
-/docker-compose.yml @synapse-framework/devops-team
+/docs/ @synapse-framework/docs-team @synapse-framework/core-team
+*.md @synapse-framework/docs-team @synapse-framework/core-team
+README.md @synapse-framework/docs-team @synapse-framework/core-team
 
 # Configuration files
-/package.json @synapse-framework/maintainers
-/tsconfig.json @synapse-framework/maintainers
-/.eslintrc.js @synapse-framework/maintainers
-/.prettierrc @synapse-framework/maintainers
-/Makefile @synapse-framework/maintainers
+package.json @synapse-framework/core-team @synapse-framework/devops-team
+tsconfig.json @synapse-framework/core-team @synapse-framework/typescript-team
+Makefile @synapse-framework/devops-team @synapse-framework/core-team
 
-# Examples and demos
-/examples/ @synapse-framework/examples-team
-/demos/ @synapse-framework/examples-team
+# GitHub workflows and security
+/.github/ @synapse-framework/devops-team @synapse-framework/security-team
+/.github/workflows/ @synapse-framework/devops-team @synapse-framework/security-team
+/.github/security-policy.yml @synapse-framework/security-team
+/.github/dependabot.yml @synapse-framework/security-team @synapse-framework/devops-team
 
-# Website
-/website/ @synapse-framework/website-team
+# Security-related files
+SECURITY.md @synapse-framework/security-team
+/.husky/ @synapse-framework/devops-team @synapse-framework/security-team
+commitlint.config.js @synapse-framework/devops-team @synapse-framework/security-team
+
+# Community and ecosystem
+/community/ @synapse-framework/community-team @synapse-framework/core-team
+/examples/ @synapse-framework/community-team @synapse-framework/core-team
+
+# Mobile development
+/packages/mobile/ @synapse-framework/mobile-team @synapse-framework/core-team
+
+# Build and distribution
+/dist/ @synapse-framework/devops-team @synapse-framework/core-team
+/build/ @synapse-framework/devops-team @synapse-framework/core-team
+
+# Dependencies and lock files
+package-lock.json @synapse-framework/devops-team @synapse-framework/security-team
+yarn.lock @synapse-framework/devops-team @synapse-framework/security-team
+Cargo.lock @synapse-framework/rust-team @synapse-framework/security-team
+
+# Environment and secrets
+.env* @synapse-framework/security-team @synapse-framework/devops-team
+*.key @synapse-framework/security-team
+*.pem @synapse-framework/security-team
+*.p12 @synapse-framework/security-team
+
+# Docker and containers
+Dockerfile* @synapse-framework/devops-team @synapse-framework/security-team
+docker-compose*.yml @synapse-framework/devops-team @synapse-framework/security-team
+.dockerignore @synapse-framework/devops-team @synapse-framework/security-team
+
+# CI/CD and deployment
+/.github/workflows/ci.yml @synapse-framework/devops-team @synapse-framework/security-team
+/.github/workflows/security.yml @synapse-framework/security-team
+/.github/workflows/publish.yml @synapse-framework/devops-team @synapse-framework/security-team
+/.github/workflows/release.yml @synapse-framework/devops-team @synapse-framework/security-team
