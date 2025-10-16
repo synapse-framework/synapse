@@ -1,0 +1,5 @@
+# Run linting
+npm run lint
+
+# Run tests
+npm run test
