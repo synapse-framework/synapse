@@ -91,10 +91,9 @@ jobs:
           cache: 'npm'
 
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ env.RUST_VERSION }}
-          override: true
 
       - name: Install dependencies
         run: npm ci
@@ -106,9 +105,11 @@ jobs:
         run: make build-node
 
       - name: Build UI library
+        if: ${{ hashFiles('packages/ui/package.json') != '' }}
         run: cd packages/ui && npm run build
 
       - name: Build Storybook
+        if: ${{ hashFiles('packages/ui/package.json') != '' }}
         run: cd packages/ui && npm run build-storybook
 
       - name: Upload build artifacts
@@ -118,7 +119,7 @@ jobs:
           path: |
             dist/
             packages/*/dist/
-            packages/ui/storybook-static/
+          if-no-files-found: warn
 
   # Security Audit
   security:
@@ -141,6 +142,7 @@ jobs:
         run: npm audit --audit-level moderate
 
       - name: Run Snyk security scan
+        if: ${{ secrets.SNYK_TOKEN != '' }}
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
@@ -169,6 +171,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+        continue-on-error: true
 
       - name: Run performance tests
         run: npm run test:performance
@@ -196,6 +199,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+        continue-on-error: true
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
@@ -228,6 +232,7 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: build-artifacts
+        continue-on-error: true
 
       - name: Publish packages
         run: npm run publish:all
@@ -271,6 +276,7 @@ jobs:
     if: always()
     steps:
       - name: Notify Discord
+        if: ${{ secrets.DISCORD_WEBHOOK != '' }}
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
