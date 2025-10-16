@@ -1,0 +1,48 @@
+# Global code owners
+* @synapse-framework/maintainers
+
+# Core framework
+/packages/core/ @synapse-framework/core-team
+/src/ @synapse-framework/core-team
+
+# CLI tool
+/packages/cli/ @synapse-framework/cli-team
+/scripts/ @synapse-framework/cli-team
+
+# Compiler
+/packages/compiler/ @synapse-framework/compiler-team
+/rust-compiler/ @synapse-framework/compiler-team
+
+# UI library
+/packages/ui/ @synapse-framework/ui-team
+/website/ @synapse-framework/ui-team
+
+# Mobile support
+/packages/mobile/ @synapse-framework/mobile-team
+
+# Testing
+/packages/testing/ @synapse-framework/testing-team
+/test-*.js @synapse-framework/testing-team
+
+# Documentation
+/docs/ @synapse-framework/docs-team
+*.md @synapse-framework/docs-team
+
+# CI/CD
+/.github/ @synapse-framework/devops-team
+/Dockerfile @synapse-framework/devops-team
+/docker-compose.yml @synapse-framework/devops-team
+
+# Configuration files
+/package.json @synapse-framework/maintainers
+/tsconfig.json @synapse-framework/maintainers
+/.eslintrc.js @synapse-framework/maintainers
+/.prettierrc @synapse-framework/maintainers
+/Makefile @synapse-framework/maintainers
+
+# Examples and demos
+/examples/ @synapse-framework/examples-team
+/demos/ @synapse-framework/examples-team
+
+# Website
+/website/ @synapse-framework/website-team

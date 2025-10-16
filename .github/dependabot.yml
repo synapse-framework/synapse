@@ -1,0 +1,125 @@
+version: 2
+updates:
+  # Enable version updates for npm
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 10
+    reviewers:
+      - "synapse-framework/maintainers"
+    assignees:
+      - "synapse-framework/maintainers"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "javascript"
+    ignore:
+      # Ignore major version updates for critical packages
+      - dependency-name: "typescript"
+        update-types: ["version-update:semver-major"]
+      - dependency-name: "node"
+        update-types: ["version-update:semver-major"]
+
+  # Enable version updates for npm in packages
+  - package-ecosystem: "npm"
+    directory: "/packages/core"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "synapse-framework/maintainers"
+    assignees:
+      - "synapse-framework/maintainers"
+    commit-message:
+      prefix: "deps(core)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "core"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/ui"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "synapse-framework/maintainers"
+    assignees:
+      - "synapse-framework/maintainers"
+    commit-message:
+      prefix: "deps(ui)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "ui"
+
+  - package-ecosystem: "npm"
+    directory: "/packages/mobile"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "synapse-framework/maintainers"
+    assignees:
+      - "synapse-framework/maintainers"
+    commit-message:
+      prefix: "deps(mobile)"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "mobile"
+
+  # Enable version updates for GitHub Actions
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 5
+    reviewers:
+      - "synapse-framework/maintainers"
+    assignees:
+      - "synapse-framework/maintainers"
+    commit-message:
+      prefix: "ci"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "github-actions"
+
+  # Enable version updates for Docker
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "UTC"
+    open-pull-requests-limit: 3
+    reviewers:
+      - "synapse-framework/maintainers"
+    assignees:
+      - "synapse-framework/maintainers"
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    labels:
+      - "dependencies"
+      - "docker"
