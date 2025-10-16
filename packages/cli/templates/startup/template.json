@@ -1,0 +1,26 @@
+{
+  "name": "Startup MVP",
+  "description": "Rapid development template for startup MVPs",
+  "version": "1.0.0",
+  "author": "Synapse Framework",
+  "variables": [
+    "projectName",
+    "description",
+    "author",
+    "startupName"
+  ],
+  "files": {
+    "package.json": {
+      "content": "{\n  \"name\": \"{{projectName}}\",\n  \"version\": \"0.1.0\",\n  \"description\": \"{{description}}\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"synapse dev\",\n    \"build\": \"synapse build\",\n    \"deploy\": \"synapse deploy\",\n    \"test\": \"synapse test\"\n  },\n  \"dependencies\": {\n    \"@snps/core\": \"^0.1.0\"\n  }\n}",
+      "type": "json"
+    },
+    "src/index.ts": {
+      "content": "import { SynapseFramework } from '@snps/core';\n\nclass {{startupName}}MVP {\n  constructor() {\n    console.log('🚀 {{startupName}} MVP - {{projectName}}');\n    console.log('💡 Built for rapid iteration and fast deployment');\n  }\n  \n  async launch() {\n    console.log('✅ MVP launched successfully!');\n    console.log('🎯 Ready for user feedback and iteration');\n  }\n}\n\nconst mvp = new {{startupName}}MVP();\nawait mvp.launch();\n",
+      "type": "typescript"
+    },
+    "README.md": {
+      "content": "# {{projectName}}\n\n{{description}}\n\n## Startup: {{startupName}}\n\n### Quick Start\n```bash\nnpm run dev\n```\n\n### MVP Features\n- Fast development\n- Quick deployment\n- User feedback ready\n- Iteration friendly\n",
+      "type": "markdown"
+    }
+  }
+}

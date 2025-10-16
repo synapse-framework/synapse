@@ -1,0 +1,26 @@
+{
+  "name": "API Server",
+  "description": "Backend API server template with Express-like structure",
+  "version": "1.0.0",
+  "author": "Synapse Framework",
+  "variables": [
+    "projectName",
+    "description",
+    "author",
+    "port"
+  ],
+  "files": {
+    "package.json": {
+      "content": "{\n  \"name\": \"{{projectName}}\",\n  \"version\": \"0.1.0\",\n  \"description\": \"{{description}}\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"synapse dev\",\n    \"build\": \"synapse build\",\n    \"test\": \"synapse test\",\n    \"start\": \"node dist/index.js\"\n  },\n  \"dependencies\": {\n    \"@snps/core\": \"^0.1.0\"\n  }\n}",
+      "type": "json"
+    },
+    "src/index.ts": {
+      "content": "import { SynapseFramework } from '@snps/core';\n\nclass {{projectName}}API {\n  private port = {{port || 3000}};\n  \n  constructor() {\n    console.log('🚀 {{projectName}} API Server starting...');\n  }\n  \n  async start() {\n    console.log(`✅ API Server running on port ${this.port}`);\n  }\n}\n\nconst api = new {{projectName}}API();\nawait api.start();\n",
+      "type": "typescript"
+    },
+    "src/routes/index.ts": {
+      "content": "export class IndexRoutes {\n  static async get() {\n    return { message: 'Welcome to {{projectName}} API' };\n  }\n  \n  static async health() {\n    return { status: 'healthy', timestamp: new Date().toISOString() };\n  }\n}",
+      "type": "typescript"
+    }
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "name": "UI Library",
+  "description": "Component library template for building reusable UI components",
+  "version": "1.0.0",
+  "author": "Synapse Framework",
+  "variables": [
+    "projectName",
+    "description",
+    "author",
+    "organization"
+  ],
+  "files": {
+    "package.json": {
+      "content": "{\n  \"name\": \"@{{organization || 'company'}}/{{projectName}}\",\n  \"version\": \"0.1.0\",\n  \"description\": \"{{description}}\",\n  \"type\": \"module\",\n  \"main\": \"dist/index.js\",\n  \"types\": \"dist/index.d.ts\",\n  \"scripts\": {\n    \"dev\": \"synapse dev\",\n    \"build\": \"synapse build\",\n    \"test\": \"synapse test\",\n    \"storybook\": \"synapse storybook\"\n  },\n  \"dependencies\": {\n    \"@snps/core\": \"^0.1.0\"\n  }\n}",
+      "type": "json"
+    },
+    "src/index.ts": {
+      "content": "// {{projectName}} UI Library\nexport * from './components';\nexport * from './themes';\nexport * from './utils';\n",
+      "type": "typescript"
+    },
+    "src/components/Button.ts": {
+      "content": "import { SynapseComponent } from '@snps/core';\n\nexport class Button extends SynapseComponent {\n  constructor(props: any = {}) {\n    super();\n    this.props = props;\n  }\n  \n  render(): string {\n    const { variant = 'primary', size = 'medium', children = 'Button' } = this.props;\n    return `<button class=\"btn btn-${variant} btn-${size}\">${children}</button>`;\n  }\n}",
+      "type": "typescript"
+    },
+    "src/themes/index.ts": {
+      "content": "export const defaultTheme = {\n  colors: {\n    primary: '#007bff',\n    secondary: '#6c757d',\n    success: '#28a745',\n    danger: '#dc3545'\n  },\n  spacing: {\n    xs: '0.25rem',\n    sm: '0.5rem',\n    md: '1rem',\n    lg: '1.5rem',\n    xl: '3rem'\n  }\n};",
+      "type": "typescript"
+    }
+  }
+}

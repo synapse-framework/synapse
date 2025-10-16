@@ -1,0 +1,12 @@
+{
+  "error.404": "Page not found",
+  "error.500": "Internal server error",
+  "error.network": "Network error. Please check your connection.",
+  "error.timeout": "Request timeout. Please try again.",
+  "error.unauthorized": "You are not authorized to perform this action",
+  "error.forbidden": "Access denied",
+  "error.validation": "Validation error",
+  "error.duplicate": "This item already exists",
+  "error.not.found": "Item not found",
+  "error.server.unavailable": "Server is temporarily unavailable"
+}

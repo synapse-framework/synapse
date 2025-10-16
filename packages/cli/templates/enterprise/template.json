@@ -1,0 +1,27 @@
+{
+  "name": "Enterprise Application",
+  "description": "Enterprise-grade application with advanced features",
+  "version": "1.0.0",
+  "author": "Synapse Framework",
+  "variables": [
+    "projectName",
+    "description",
+    "author",
+    "company",
+    "license"
+  ],
+  "files": {
+    "package.json": {
+      "content": "{\n  \"name\": \"{{projectName}}\",\n  \"version\": \"0.1.0\",\n  \"description\": \"{{description}}\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"synapse dev\",\n    \"build\": \"synapse build\",\n    \"test\": \"synapse test\",\n    \"test:coverage\": \"synapse test --coverage\",\n    \"lint\": \"synapse lint\",\n    \"security:audit\": \"synapse security:audit\",\n    \"deploy:staging\": \"synapse deploy --env staging\",\n    \"deploy:prod\": \"synapse deploy --env production\"\n  },\n  \"dependencies\": {\n    \"@snps/core\": \"^0.1.0\"\n  },\n  \"license\": \"{{license || 'UNLICENSED'}}\"\n}",
+      "type": "json"
+    },
+    "src/index.ts": {
+      "content": "import { SynapseFramework } from '@snps/core';\n\nclass {{projectName}} {\n  private readonly company = '{{company}}';\n  \n  constructor() {\n    console.log(`🏢 ${this.company} - {{projectName}} Enterprise Application`);\n  }\n  \n  async initialize() {\n    console.log('✅ Enterprise application initialized');\n  }\n}\n\nconst app = new {{projectName}}();\nawait app.initialize();\n",
+      "type": "typescript"
+    },
+    "docs/README.md": {
+      "content": "# {{projectName}}\n\n{{description}}\n\n## Company\n{{company}}\n\n## License\n{{license || 'UNLICENSED'}}\n\n## Enterprise Features\n- Security auditing\n- Performance monitoring\n- Automated testing\n- CI/CD pipeline\n",
+      "type": "markdown"
+    }
+  }
+}

@@ -1,0 +1,9 @@
+{
+  "message.welcome": "Welcome to {appName}!",
+  "message.goodbye": "Goodbye!",
+  "message.thanks": "Thank you for using {appName}",
+  "message.help": "Need help? Contact us at {email}",
+  "message.maintenance": "The system is under maintenance. Please try again later.",
+  "message.feature.coming.soon": "This feature is coming soon!",
+  "message.feature.beta": "This feature is in beta. Please report any issues."
+}

@@ -1,0 +1,18 @@
+[
+  {
+    "id": "team_1760517317375_zvzby462e",
+    "name": "My Team",
+    "description": "",
+    "members": [],
+    "projects": [],
+    "createdAt": "2025-10-15T08:35:17.375Z",
+    "updatedAt": "2025-10-15T08:35:17.376Z",
+    "settings": {
+      "allowGuestAccess": false,
+      "requireApproval": true,
+      "defaultPermissions": [
+        "read"
+      ]
+    }
+  }
+]

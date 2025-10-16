@@ -1,0 +1,20 @@
+{
+  "name": "{{projectName}}",
+  "version": "0.1.0",
+  "description": "{{description}}",
+  "type": "module",
+  "scripts": {
+    "dev": "synapse dev",
+    "build": "synapse build",
+    "test": "synapse test",
+    "test:coverage": "synapse test --coverage",
+    "lint": "synapse lint",
+    "security:audit": "synapse security:audit",
+    "deploy:staging": "synapse deploy --env staging",
+    "deploy:prod": "synapse deploy --env production"
+  },
+  "dependencies": {
+    "@snps/core": "^0.1.0"
+  },
+  "license": "{{license || 'UNLICENSED'}}"
+}

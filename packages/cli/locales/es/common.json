@@ -1,0 +1,16 @@
+{
+  "app.name": "Synapse",
+  "app.description": "A powerful application framework",
+  "common.save": "Save",
+  "common.cancel": "Cancel",
+  "common.delete": "Delete",
+  "common.edit": "Edit",
+  "common.create": "Create",
+  "common.update": "Update",
+  "common.search": "Search",
+  "common.filter": "Filter",
+  "common.sort": "Sort",
+  "common.loading": "Loading...",
+  "common.error": "An error occurred",
+  "common.success": "Operation completed successfully"
+}

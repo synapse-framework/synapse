@@ -1,0 +1,17 @@
+{
+  "name": "@{{organization || 'company'}}/{{projectName}}",
+  "version": "0.1.0",
+  "description": "{{description}}",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "dev": "synapse dev",
+    "build": "synapse build",
+    "test": "synapse test",
+    "storybook": "synapse storybook"
+  },
+  "dependencies": {
+    "@snps/core": "^0.1.0"
+  }
+}

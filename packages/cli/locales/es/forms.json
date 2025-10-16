@@ -1,0 +1,14 @@
+{
+  "form.required": "This field is required",
+  "form.email.invalid": "Please enter a valid email address",
+  "form.password.weak": "Password is too weak",
+  "form.password.mismatch": "Passwords do not match",
+  "form.phone.invalid": "Please enter a valid phone number",
+  "form.url.invalid": "Please enter a valid URL",
+  "form.date.invalid": "Please enter a valid date",
+  "form.number.invalid": "Please enter a valid number",
+  "form.min.length": "Must be at least {min} characters",
+  "form.max.length": "Must be no more than {max} characters",
+  "form.min.value": "Must be at least {min}",
+  "form.max.value": "Must be no more than {max}"
+}

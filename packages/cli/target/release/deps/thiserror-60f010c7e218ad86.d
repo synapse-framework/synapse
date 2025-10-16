@@ -1,0 +1,14 @@
+/home/matthias/projects/synapse/packages/cli/target/release/deps/thiserror-60f010c7e218ad86.d: /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/matthias/projects/synapse/packages/cli/target/release/build/thiserror-f12921cd12623463/out/private.rs
+
+/home/matthias/projects/synapse/packages/cli/target/release/deps/libthiserror-60f010c7e218ad86.rlib: /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/matthias/projects/synapse/packages/cli/target/release/build/thiserror-f12921cd12623463/out/private.rs
+
+/home/matthias/projects/synapse/packages/cli/target/release/deps/libthiserror-60f010c7e218ad86.rmeta: /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs /home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs /home/matthias/projects/synapse/packages/cli/target/release/build/thiserror-f12921cd12623463/out/private.rs
+
+/home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/lib.rs:
+/home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/aserror.rs:
+/home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/display.rs:
+/home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/var.rs:
+/home/matthias/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/thiserror-2.0.17/src/private.rs:
+/home/matthias/projects/synapse/packages/cli/target/release/build/thiserror-f12921cd12623463/out/private.rs:
+
+# env-dep:OUT_DIR=/home/matthias/projects/synapse/packages/cli/target/release/build/thiserror-f12921cd12623463/out

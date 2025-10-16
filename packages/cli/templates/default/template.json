@@ -1,0 +1,25 @@
+{
+  "name": "Default",
+  "description": "Standard Synapse project template",
+  "version": "1.0.0",
+  "author": "Synapse Framework",
+  "variables": [
+    "projectName",
+    "description",
+    "author"
+  ],
+  "files": {
+    "package.json": {
+      "content": "{\n  \"name\": \"{{projectName}}\",\n  \"version\": \"0.1.0\",\n  \"description\": \"{{description}}\",\n  \"type\": \"module\",\n  \"scripts\": {\n    \"dev\": \"synapse dev\",\n    \"build\": \"synapse build\",\n    \"test\": \"synapse test\",\n    \"lint\": \"synapse lint\",\n    \"format\": \"synapse format\"\n  },\n  \"dependencies\": {\n    \"@snps/core\": \"^0.1.0\"\n  },\n  \"devDependencies\": {\n    \"typescript\": \"^5.0.0\"\n  }\n}",
+      "type": "json"
+    },
+    "src/index.ts": {
+      "content": "import { SynapseFramework } from '@snps/core';\n\nconst app = new SynapseFramework();\nawait app.initialize();\n\nconsole.log('🚀 {{projectName}} is running!');\n",
+      "type": "typescript"
+    },
+    "public/index.html": {
+      "content": "<!DOCTYPE html>\n<html lang=\"en\">\n<head>\n    <meta charset=\"UTF-8\">\n    <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n    <title>{{projectName}}</title>\n    <style>\n        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }\n        .container { max-width: 800px; margin: 0 auto; padding: 2rem; }\n    </style>\n</head>\n<body>\n    <div class=\"container\">\n        <h1>{{projectName}}</h1>\n        <p>{{description}}</p>\n        <div id=\"app\"></div>\n    </div>\n    <script type=\"module\" src=\"/src/index.ts\"></script>\n</body>\n</html>",
+      "type": "html"
+    }
+  }
+}

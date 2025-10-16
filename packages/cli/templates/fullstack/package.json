@@ -1,0 +1,16 @@
+{
+  "name": "{{projectName}}",
+  "version": "0.1.0",
+  "description": "{{description}}",
+  "type": "module",
+  "scripts": {
+    "dev": "synapse dev",
+    "build": "synapse build",
+    "test": "synapse test",
+    "db:migrate": "synapse db:migrate",
+    "db:seed": "synapse db:seed"
+  },
+  "dependencies": {
+    "@snps/core": "^0.1.0"
+  }
+}
