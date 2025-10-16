@@ -119,7 +119,7 @@ jobs:
           path: |
             dist/
             packages/*/dist/
-          if-no-files-found: warn
+        continue-on-error: true
 
   # Security Audit
   security:
