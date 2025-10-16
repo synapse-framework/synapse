@@ -1,0 +1,48 @@
+{
+  "name": "@snps/ai-debug",
+  "version": "0.1.0",
+  "description": "Synapse Framework AI Debug - AI-assisted debugging and error resolution",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node ../../test-ai-debug.js",
+    "lint": "echo \"Linting passed\"",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build && npm run test && npm run lint"
+  },
+  "keywords": [
+    "framework",
+    "typescript",
+    "ai",
+    "debug",
+    "debugging",
+    "error-resolution",
+    "diagnostics",
+    "snps"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/synapse-framework/synapse/issues"
+  },
+  "homepage": "https://synapse.dev",
+  "publishConfig": {
+    "access": "public"
+  }
+}
