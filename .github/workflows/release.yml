@@ -140,10 +140,9 @@ jobs:
           cache: 'npm'
 
       - name: Setup Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@stable
         with:
           toolchain: ${{ env.RUST_VERSION }}
-          override: true
 
       - name: Install dependencies
         run: npm ci
@@ -155,9 +154,11 @@ jobs:
         run: make build-node
 
       - name: Build UI library
+        if: ${{ hashFiles('packages/ui/package.json') != '' }}
         run: cd packages/ui && npm run build
 
       - name: Build Storybook
+        if: ${{ hashFiles('packages/ui/package.json') != '' }}
         run: cd packages/ui && npm run build-storybook
 
       - name: Create distribution package
@@ -239,6 +240,7 @@ jobs:
     if: always()
     steps:
       - name: Notify Discord
+        if: ${{ secrets.DISCORD_WEBHOOK != '' }}
         uses: Ilshidur/action-discord@master
         env:
           DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
@@ -266,6 +268,7 @@ jobs:
             **Install:** `npm install -g @snps/cli`
 
       - name: Notify Twitter
+        if: ${{ secrets.TWITTER_API_KEY != '' }}
         uses: 8bit-music/action-tweet@v1
         env:
           TWITTER_API_KEY: ${{ secrets.TWITTER_API_KEY }}
