@@ -1,0 +1,47 @@
+# Source files
+src/
+rust-compiler/src/
+packages/*/src/
+
+# Tests
+test-*.js
+COMPLETE_TEST.js
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+tests/
+__tests__/
+
+# Build artifacts
+build/
+rust-compiler/target/
+
+# Documentation
+docs/
+*.md
+!README.md
+!LICENSE
+
+# Config files
+.github/
+.vscode/
+.editorconfig
+.gitignore
+.npmignore
+tsconfig.json
+Makefile
+
+# Scripts
+scripts/
+
+# Development
+node_modules/
+.env
+.env.*
+
+# IDE
+.idea/
+*.swp
+*.swo
+.DS_Store
