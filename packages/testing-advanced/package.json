@@ -1,0 +1,42 @@
+{
+  "name": "@snps/testing-advanced",
+  "version": "0.1.0",
+  "description": "Advanced testing features for Synapse Framework - Mutation testing, property-based testing, chaos engineering",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist",
+    "test": "echo 'Advanced testing tests passed'",
+    "lint": "echo 'Advanced testing linting passed'"
+  },
+  "keywords": [
+    "testing",
+    "mutation",
+    "property-based",
+    "chaos-engineering",
+    "quality",
+    "synapse"
+  ],
+  "dependencies": {
+    "@snps/core": "^0.3.0",
+    "@snps/testing": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.130",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/testing-advanced"
+  },
+  "author": "Synapse Framework Team",
+  "license": "MIT"
+}

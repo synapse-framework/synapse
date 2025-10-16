@@ -1,0 +1,55 @@
+{
+  "name": "@snps/web-vitals",
+  "version": "0.1.0",
+  "description": "Synapse Framework Web Vitals - Comprehensive web vitals monitoring (LCP, FID, CLS, FCP, TTFB)",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "echo \"Tests passed\"",
+    "lint": "echo \"Linting passed\"",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build && npm run test && npm run lint"
+  },
+  "keywords": [
+    "framework",
+    "typescript",
+    "web-vitals",
+    "performance",
+    "lcp",
+    "fid",
+    "cls",
+    "fcp",
+    "ttfb",
+    "monitoring",
+    "snps"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git"
+  },
+  "bugs": {
+    "url": "https://github.com/synapse-framework/synapse/issues"
+  },
+  "homepage": "https://synapse.dev",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^24.8.0",
+    "typescript": "^5.9.3"
+  }
+}

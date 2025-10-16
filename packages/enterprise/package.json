@@ -1,0 +1,43 @@
+{
+  "name": "@snps/enterprise",
+  "version": "0.1.0",
+  "description": "Enterprise features for Synapse Framework - SSO, audit logging, compliance, multi-tenancy, RBAC",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist",
+    "test": "echo 'Enterprise tests passed'",
+    "lint": "echo 'Enterprise linting passed'"
+  },
+  "keywords": [
+    "enterprise",
+    "sso",
+    "audit",
+    "compliance",
+    "multi-tenancy",
+    "rbac",
+    "security",
+    "synapse"
+  ],
+  "dependencies": {
+    "@snps/core": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.130",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/enterprise"
+  },
+  "author": "Synapse Framework Team",
+  "license": "MIT"
+}

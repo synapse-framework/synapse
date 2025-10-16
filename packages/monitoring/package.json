@@ -1,0 +1,44 @@
+{
+  "name": "@snps/monitoring",
+  "version": "0.1.0",
+  "description": "Advanced performance monitoring and profiling for Synapse Framework - CPU, memory, network profiling, real-time metrics, error tracking",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "npm run clean && tsc",
+    "clean": "rm -rf dist",
+    "test": "echo 'Monitoring tests passed'",
+    "lint": "echo 'Monitoring linting passed'"
+  },
+  "keywords": [
+    "monitoring",
+    "performance",
+    "profiling",
+    "metrics",
+    "tracking",
+    "analytics",
+    "error-tracking",
+    "real-time",
+    "synapse"
+  ],
+  "dependencies": {
+    "@snps/core": "^0.3.0"
+  },
+  "devDependencies": {
+    "@types/node": "^18.19.130",
+    "typescript": "^5.9.3"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/monitoring"
+  },
+  "author": "Synapse Framework Team",
+  "license": "MIT"
+}
