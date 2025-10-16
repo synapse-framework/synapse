@@ -105,12 +105,20 @@ jobs:
         run: make build-node
 
       - name: Build UI library
-        if: ${{ hashFiles('packages/ui/package.json') != '' }}
-        run: cd packages/ui && npm run build
+        run: |
+          if [ -f packages/ui/package.json ]; then
+            cd packages/ui && npm run build
+          else
+            echo "UI package not found, skipping build"
+          fi
 
       - name: Build Storybook
-        if: ${{ hashFiles('packages/ui/package.json') != '' }}
-        run: cd packages/ui && npm run build-storybook
+        run: |
+          if [ -f packages/ui/package.json ]; then
+            cd packages/ui && npm run build-storybook
+          else
+            echo "UI package not found, skipping Storybook build"
+          fi
 
       - name: Upload build artifacts
         uses: actions/upload-artifact@v3
