@@ -9,7 +9,7 @@ build/
 *.tgz
 
 # Rust
-rust-compiler/target/
+**/target/
 Cargo.lock
 
 # Testing
@@ -223,7 +223,7 @@ ehthumbs.db
 Thumbs.db
 
 # Rust
-rust-compiler/target/
+**/target/
 Cargo.lock
 
 # Build outputs
