@@ -37,18 +37,10 @@ jobs:
         run: make build
 
       - name: Run tests
-        run: |
-          node test-simple.js
-          node test-core-components.js
-          node COMPLETE_TEST.js
-
-      - name: Create distribution package
-        run: make package
+        run: make test
 
       - name: Publish to NPM
-        run: |
-          cd dist/final
-          npm publish --access public
+        run: make publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

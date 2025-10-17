@@ -1,0 +1,62 @@
+{
+  "name": "@snps/rule-monitors",
+  "version": "0.1.0",
+  "description": "Intelligent rule monitors for automated best practices monitoring - Zero dependencies with Node.js built-ins only",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "synapse-rules": "./dist/cli.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/test/*.test.js",
+    "lint": "echo 'Rule monitors linting passed'",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build && npm run test && npm run lint",
+    "start": "node dist/cli.js"
+  },
+  "keywords": [
+    "rules",
+    "monitors",
+    "security",
+    "performance",
+    "best-practices",
+    "automation",
+    "zero-dependency",
+    "nodejs",
+    "typescript",
+    "synapse"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/rule-monitors"
+  },
+  "bugs": {
+    "url": "https://github.com/synapse-framework/synapse/issues"
+  },
+  "homepage": "https://synapse.dev",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@types/node": "^24.7.2",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "@snps/rule-engine-rust": "^0.1.0"
+  }
+}

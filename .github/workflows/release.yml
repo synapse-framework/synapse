@@ -196,7 +196,7 @@ jobs:
         run: make build
 
       - name: Publish packages
-        run: npm run publish:all
+        run: make publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 

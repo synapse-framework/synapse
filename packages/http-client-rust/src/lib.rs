@@ -1,9 +1,11 @@
 use napi_derive::napi;
 use serde::{Deserialize, Serialize};
 use std::collections::HashMap;
+use std::sync::Arc;
 use tokio::io::{AsyncReadExt, AsyncWriteExt};
 use tokio::net::TcpStream;
-use tokio_native_tls::TlsConnector;
+use tokio_rustls::TlsConnector;
+use rustls::ClientConfig;
 use url::Url;
 
 #[napi]
@@ -13,7 +15,7 @@ pub struct HttpClient {
     timeout: u32,
 }
 
-#[napi]
+#[napi(object)]
 #[derive(Serialize, Deserialize)]
 pub struct HttpResponse {
     pub data: serde_json::Value,
@@ -22,7 +24,7 @@ pub struct HttpResponse {
     pub headers: HashMap<String, String>,
 }
 
-#[napi]
+#[napi(object)]
 #[derive(Serialize, Deserialize)]
 pub struct HttpRequestConfig {
     pub method: Option<String>,
@@ -177,7 +179,7 @@ impl HttpClient {
         host: &str,
         port: u16,
         request: &str,
-        timeout_ms: u32,
+        _timeout_ms: u32,
     ) -> napi::Result<String> {
         let addr = format!("{}:{}", host, port);
         let mut stream = TcpStream::connect(&addr)
@@ -201,19 +203,33 @@ impl HttpClient {
         host: &str,
         port: u16,
         request: &str,
-        timeout_ms: u32,
+        _timeout_ms: u32,
     ) -> napi::Result<String> {
         let addr = format!("{}:{}", host, port);
         let stream = TcpStream::connect(&addr)
             .await
             .map_err(|e| napi::Error::new(napi::Status::GenericFailure, format!("Connection failed: {}", e)))?;
 
-        let connector = TlsConnector::from(
-            native_tls::TlsConnector::new()
-                .map_err(|e| napi::Error::new(napi::Status::GenericFailure, format!("TLS connector failed: {}", e)))?
-        );
+        // Create rustls config with native certificates
+        let mut root_store = rustls::RootCertStore::empty();
+        let certs = rustls_native_certs::load_native_certs();
+        for cert in certs.certs {
+            root_store.add(cert)
+                .map_err(|e| napi::Error::new(napi::Status::GenericFailure, format!("Failed to add cert: {}", e)))?;
+        }
+        if root_store.is_empty() {
+            return Err(napi::Error::new(napi::Status::GenericFailure, "No valid certificates found"));
+        }
 
-        let mut tls_stream = connector.connect(host, stream)
+        let config = ClientConfig::builder()
+            .with_root_certificates(root_store)
+            .with_no_client_auth();
+
+        let connector = TlsConnector::from(Arc::new(config));
+        let domain = rustls::pki_types::ServerName::try_from(host.to_string())
+            .map_err(|e| napi::Error::new(napi::Status::GenericFailure, format!("Invalid hostname: {}", e)))?;
+
+        let mut tls_stream = connector.connect(domain, stream)
             .await
             .map_err(|e| napi::Error::new(napi::Status::GenericFailure, format!("TLS handshake failed: {}", e)))?;
 

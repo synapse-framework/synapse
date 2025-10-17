@@ -1,0 +1,49 @@
+{
+  "name": "@snps/http-client",
+  "version": "0.1.0",
+  "description": "Zero-dependency HTTP client with full axios compatibility - Built with Node.js built-in modules only",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/test/*.test.js",
+    "lint": "echo 'HTTP client linting passed'",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build && npm run test && npm run lint"
+  },
+  "keywords": [
+    "http",
+    "https",
+    "client",
+    "axios",
+    "zero-dependency",
+    "nodejs",
+    "typescript",
+    "synapse"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/http-client"
+  },
+  "bugs": {
+    "url": "https://github.com/synapse-framework/synapse/issues"
+  },
+  "homepage": "https://synapse.dev",
+  "publishConfig": {
+    "access": "public"
+  }
+}

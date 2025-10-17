@@ -21,15 +21,11 @@
   "author": "Synapse Framework Team",
   "license": "MIT",
   "dependencies": {
-    "discord.js": "^14.14.1",
-    "axios": "^1.6.2",
-    "dotenv": "^16.3.1"
+    "@snps/http-client": "^0.1.0",
+    "@snps/env-parser": "^0.1.0"
   },
   "devDependencies": {
-    "nodemon": "^3.0.2",
-    "jest": "^29.7.0",
-    "eslint": "^8.56.0",
-    "prettier": "^3.1.1"
+    "nodemon": "^3.0.2"
   },
   "engines": {
     "node": ">=18.0.0"

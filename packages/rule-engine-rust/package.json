@@ -1,0 +1,76 @@
+{
+  "name": "@snps/rule-engine-rust",
+  "version": "0.1.0",
+  "description": "Intelligent rule engine for automated best practices monitoring and enforcement - Built with Rust for maximum performance",
+  "type": "module",
+  "main": "index.js",
+  "types": "index.d.ts",
+  "bin": {
+    "rule-engine": "./bin/rule-engine"
+  },
+  "napi": {
+    "name": "snps-rule-engine-rust",
+    "triples": {
+      "defaults": true,
+      "additional": [
+        "x86_64-unknown-linux-musl",
+        "aarch64-unknown-linux-gnu",
+        "aarch64-apple-darwin",
+        "armv7-unknown-linux-gnueabihf",
+        "x86_64-pc-windows-msvc"
+      ]
+    }
+  },
+  "scripts": {
+    "artifacts": "napi artifacts",
+    "build": "napi build --platform --release",
+    "build:debug": "napi build --platform",
+    "prepublishOnly": "napi prepublish -t npm",
+    "test": "cargo test && node --test tests/*.test.js",
+    "bench": "cargo bench",
+    "version": "napi version",
+    "clean": "cargo clean"
+  },
+  "keywords": [
+    "rules",
+    "engine",
+    "linting",
+    "security",
+    "performance",
+    "best-practices",
+    "automation",
+    "rust",
+    "zero-dependency",
+    "napi",
+    "nodejs",
+    "typescript",
+    "synapse"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "index.js",
+    "index.d.ts",
+    "bin",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/rule-engine-rust"
+  },
+  "bugs": {
+    "url": "https://github.com/synapse-framework/synapse/issues"
+  },
+  "homepage": "https://synapse.dev",
+  "publishConfig": {
+    "access": "public"
+  },
+  "devDependencies": {
+    "@napi-rs/cli": "^2.18.0"
+  }
+}

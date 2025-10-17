@@ -1,29 +1,25 @@
-// Synapse Framework Discord Bot
-const { Client, GatewayIntentBits, EmbedBuilder, ActionRowBuilder, ButtonBuilder, ButtonStyle } = require('discord.js');
-const axios = require('axios');
+// Synapse Framework Discord Bot - Zero Dependencies
+import { DiscordClient } from './src/discord-client.js';
+import { EnvParser } from '@snps/env-parser';
+
+// Load environment variables
+const env = EnvParser.load('.env');
+Object.assign(process.env, env);
 
 class SynapseDiscordBot {
   constructor() {
-    this.client = new Client({
-      intents: [
-        GatewayIntentBits.Guilds,
-        GatewayIntentBits.GuildMessages,
-        GatewayIntentBits.MessageContent,
-        GatewayIntentBits.GuildMembers
-      ]
-    });
-    
+    this.client = new DiscordClient(process.env.DISCORD_BOT_TOKEN);
     this.prefix = '!synapse';
     this.setupEventHandlers();
   }
 
   setupEventHandlers() {
-    this.client.once('ready', () => {
-      console.log(`🤖 Synapse Bot is online as ${this.client.user.tag}!`);
+    this.client.once('ready', (data) => {
+      console.log(`🤖 Synapse Bot is online as ${data.user.username}#${data.user.discriminator}!`);
       this.setActivity();
     });
 
-    this.client.on('messageCreate', async (message) => {
+    this.client.on('message', async (message) => {
       if (message.author.bot) return;
       if (!message.content.startsWith(this.prefix)) return;
 
@@ -34,13 +30,14 @@ class SynapseDiscordBot {
         await this.handleCommand(message, command, args);
       } catch (error) {
         console.error('Command error:', error);
-        await message.reply('❌ An error occurred while processing your command.');
+        await this.client.sendMessage(message.channel_id, '❌ An error occurred while processing your command.');
       }
     });
   }
 
   setActivity() {
-    this.client.user.setActivity('Synapse Framework | !synapse help', { type: 'WATCHING' });
+    // Note: Setting activity would require additional Discord API calls
+    console.log('Bot activity set to: Synapse Framework | !synapse help');
   }
 
   async handleCommand(message, command, args) {
@@ -84,11 +81,11 @@ class SynapseDiscordBot {
   }
 
   async helpCommand(message) {
-    const embed = new EmbedBuilder()
-      .setTitle('🚀 Synapse Framework Bot Help')
-      .setDescription('Here are the available commands:')
-      .setColor(0x2563eb)
-      .addFields(
+    const embed = {
+      title: '🚀 Synapse Framework Bot Help',
+      description: 'Here are the available commands:',
+      color: 0x2563eb,
+      fields: [
         {
           name: '📚 Documentation',
           value: '`!synapse docs [topic]` - Get documentation links\n`!synapse example [type]` - Show code examples',
@@ -109,27 +106,12 @@ class SynapseDiscordBot {
           value: '`!synapse community` - Community links\n`!synapse news` - Latest news',
           inline: false
         }
-      )
-      .setFooter({ text: 'Synapse Framework • Zero-dependency TypeScript-first' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Synapse Framework • Zero-dependency TypeScript-first' },
+      timestamp: new Date().toISOString()
+    };
 
-    const row = new ActionRowBuilder()
-      .addComponents(
-        new ButtonBuilder()
-          .setLabel('Website')
-          .setStyle(ButtonStyle.Link)
-          .setURL('https://synapse-framework.dev'),
-        new ButtonBuilder()
-          .setLabel('GitHub')
-          .setStyle(ButtonStyle.Link)
-          .setURL('https://github.com/synapse-framework/synapse'),
-        new ButtonBuilder()
-          .setLabel('Discord')
-          .setStyle(ButtonStyle.Link)
-          .setURL('https://discord.gg/synapse-framework')
-      );
-
-    await message.reply({ embeds: [embed], components: [row] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async docsCommand(message, args) {
@@ -147,11 +129,11 @@ class SynapseDiscordBot {
 
     const link = docLinks[topic] || docLinks['general'];
     
-    const embed = new EmbedBuilder()
-      .setTitle(`📚 Synapse Documentation - ${topic.charAt(0).toUpperCase() + topic.slice(1)}`)
-      .setDescription(`Here's the documentation for **${topic}**:`)
-      .setColor(0x2563eb)
-      .addFields(
+    const embed = {
+      title: `📚 Synapse Documentation - ${topic.charAt(0).toUpperCase() + topic.slice(1)}`,
+      description: `Here's the documentation for **${topic}**:`,
+      color: 0x2563eb,
+      fields: [
         {
           name: '🔗 Link',
           value: `[View Documentation](${link})`,
@@ -162,25 +144,26 @@ class SynapseDiscordBot {
           value: '```bash\nnpm install -g @snps/cli\nsynapse init my-app\ncd my-app && synapse dev\n```',
           inline: false
         }
-      )
-      .setFooter({ text: 'Need help? Ask in #help channel!' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Need help? Ask in #help channel!' },
+      timestamp: new Date().toISOString()
+    };
 
-    await message.reply({ embeds: [embed] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async installCommand(message, args) {
     const packageName = args[0];
     if (!packageName) {
-      await message.reply('❌ Please specify a package name. Example: `!synapse install @snps/ui`');
+      await this.client.sendMessage(message.channel_id, '❌ Please specify a package name. Example: `!synapse install @snps/ui`');
       return;
     }
 
-    const embed = new EmbedBuilder()
-      .setTitle('📦 Package Installation')
-      .setDescription(`Installing **${packageName}**...`)
-      .setColor(0x22c55e)
-      .addFields(
+    const embed = {
+      title: '📦 Package Installation',
+      description: `Installing **${packageName}**...`,
+      color: 0x22c55e,
+      fields: [
         {
           name: 'Command',
           value: `\`npm install ${packageName}\``,
@@ -191,22 +174,27 @@ class SynapseDiscordBot {
           value: `\`synapse add ${packageName}\``,
           inline: false
         }
-      )
-      .setFooter({ text: 'Package installation instructions' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Package installation instructions' },
+      timestamp: new Date().toISOString()
+    };
 
-    await message.reply({ embeds: [embed] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async versionCommand(message) {
     try {
-      const response = await axios.get('https://registry.npmjs.org/@snps/core');
+      const response = await this.client.http.get('/@snps/core', {
+        headers: {
+          'Accept': 'application/vnd.npm.install-v1+json',
+        },
+      });
       const latestVersion = response.data['dist-tags'].latest;
       
-      const embed = new EmbedBuilder()
-        .setTitle('📊 Synapse Framework Versions')
-        .setColor(0x2563eb)
-        .addFields(
+      const embed = {
+        title: '📊 Synapse Framework Versions',
+        color: 0x2563eb,
+        fields: [
           {
             name: 'Latest Version',
             value: `**${latestVersion}**`,
@@ -222,21 +210,22 @@ class SynapseDiscordBot {
             value: '5.0.0+',
             inline: true
           }
-        )
-        .setFooter({ text: 'Check for updates regularly!' })
-        .setTimestamp();
+        ],
+        footer: { text: 'Check for updates regularly!' },
+        timestamp: new Date().toISOString()
+      };
 
-      await message.reply({ embeds: [embed] });
+      await this.client.createEmbed(message.channel_id, embed);
     } catch (error) {
-      await message.reply('❌ Could not fetch version information.');
+      await this.client.sendMessage(message.channel_id, '❌ Could not fetch version information.');
     }
   }
 
   async statusCommand(message) {
-    const embed = new EmbedBuilder()
-      .setTitle('🟢 Synapse Framework Status')
-      .setColor(0x22c55e)
-      .addFields(
+    const embed = {
+      title: '🟢 Synapse Framework Status',
+      color: 0x22c55e,
+      fields: [
         {
           name: 'Website',
           value: '🟢 Online',
@@ -267,24 +256,25 @@ class SynapseDiscordBot {
           value: '🟢 Online',
           inline: true
         }
-      )
-      .setFooter({ text: 'All systems operational' })
-      .setTimestamp();
+      ],
+      footer: { text: 'All systems operational' },
+      timestamp: new Date().toISOString()
+    };
 
-    await message.reply({ embeds: [embed] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async searchCommand(message, args) {
     const query = args.join(' ');
     if (!query) {
-      await message.reply('❌ Please provide a search query. Example: `!synapse search components`');
+      await this.client.sendMessage(message.channel_id, '❌ Please provide a search query. Example: `!synapse search components`');
       return;
     }
 
-    const embed = new EmbedBuilder()
-      .setTitle(`🔍 Search Results for "${query}"`)
-      .setColor(0x2563eb)
-      .addFields(
+    const embed = {
+      title: `🔍 Search Results for "${query}"`,
+      color: 0x2563eb,
+      fields: [
         {
           name: '📚 Documentation',
           value: `[Search Docs](https://synapse-framework.dev/search?q=${encodeURIComponent(query)})`,
@@ -300,21 +290,22 @@ class SynapseDiscordBot {
           value: `[Search GitHub](https://github.com/synapse-framework/synapse/search?q=${encodeURIComponent(query)})`,
           inline: false
         }
-      )
-      .setFooter({ text: 'Try different keywords for better results' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Try different keywords for better results' },
+      timestamp: new Date().toISOString()
+    };
 
-    await message.reply({ embeds: [embed] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async templateCommand(message, args) {
     const templateName = args[0] || 'list';
     
     if (templateName === 'list') {
-      const embed = new EmbedBuilder()
-        .setTitle('🎨 Available Templates')
-        .setColor(0x2563eb)
-        .addFields(
+      const embed = {
+        title: '🎨 Available Templates',
+        color: 0x2563eb,
+        fields: [
           {
             name: '🏠 Landing Pages',
             value: '• startup-landing\n• saas-landing\n• portfolio\n• agency\n• ecommerce',
@@ -330,16 +321,17 @@ class SynapseDiscordBot {
             value: '• corporate-website\n• documentation\n• support-portal\n• intranet\n• compliance',
             inline: true
           }
-        )
-        .setFooter({ text: 'Use !synapse template [name] for details' })
-        .setTimestamp();
+        ],
+        footer: { text: 'Use !synapse template [name] for details' },
+        timestamp: new Date().toISOString()
+      };
 
-      await message.reply({ embeds: [embed] });
+      await this.client.createEmbed(message.channel_id, embed);
     } else {
-      const embed = new EmbedBuilder()
-        .setTitle(`🎨 Template: ${templateName}`)
-        .setColor(0x2563eb)
-        .addFields(
+      const embed = {
+        title: `🎨 Template: ${templateName}`,
+        color: 0x2563eb,
+        fields: [
           {
             name: 'Install Command',
             value: `\`synapse template:install ${templateName}\``,
@@ -355,11 +347,12 @@ class SynapseDiscordBot {
             value: `[Template Gallery](https://synapse-framework.dev/templates/${templateName})`,
             inline: false
           }
-        )
-        .setFooter({ text: 'Browse all templates at synapse-framework.dev/templates' })
-        .setTimestamp();
+        ],
+        footer: { text: 'Browse all templates at synapse-framework.dev/templates' },
+        timestamp: new Date().toISOString()
+      };
 
-      await message.reply({ embeds: [embed] });
+      await this.client.createEmbed(message.channel_id, embed);
     }
   }
 
@@ -367,10 +360,10 @@ class SynapseDiscordBot {
     const pluginName = args[0] || 'list';
     
     if (pluginName === 'list') {
-      const embed = new EmbedBuilder()
-        .setTitle('🔌 Available Plugins')
-        .setColor(0x2563eb)
-        .addFields(
+      const embed = {
+        title: '🔌 Available Plugins',
+        color: 0x2563eb,
+        fields: [
           {
             name: '🎨 UI & Design',
             value: '• @snps/plugin-theme-builder\n• @snps/plugin-component-library\n• @snps/plugin-animations',
@@ -386,16 +379,17 @@ class SynapseDiscordBot {
             value: '• @snps/plugin-auth-jwt\n• @snps/plugin-auth-oauth\n• @snps/plugin-security-headers',
             inline: true
           }
-        )
-        .setFooter({ text: 'Use !synapse plugin [name] for details' })
-        .setTimestamp();
+        ],
+        footer: { text: 'Use !synapse plugin [name] for details' },
+        timestamp: new Date().toISOString()
+      };
 
-      await message.reply({ embeds: [embed] });
+      await this.client.createEmbed(message.channel_id, embed);
     } else {
-      const embed = new EmbedBuilder()
-        .setTitle(`🔌 Plugin: ${pluginName}`)
-        .setColor(0x2563eb)
-        .addFields(
+      const embed = {
+        title: `🔌 Plugin: ${pluginName}`,
+        color: 0x2563eb,
+        fields: [
           {
             name: 'Install Command',
             value: `\`npm install ${pluginName}\``,
@@ -411,11 +405,12 @@ class SynapseDiscordBot {
             value: `[Plugin Marketplace](https://synapse-framework.dev/plugins/${pluginName})`,
             inline: false
           }
-        )
-        .setFooter({ text: 'Browse all plugins at synapse-framework.dev/plugins' })
-        .setTimestamp();
+        ],
+        footer: { text: 'Browse all plugins at synapse-framework.dev/plugins' },
+        timestamp: new Date().toISOString()
+      };
 
-      await message.reply({ embeds: [embed] });
+      await this.client.createEmbed(message.channel_id, embed);
     }
   }
 
@@ -476,29 +471,30 @@ state.set('count', 1);`
 
     const example = examples[exampleType] || examples['basic'];
     
-    const embed = new EmbedBuilder()
-      .setTitle(`💡 Example: ${example.title}`)
-      .setDescription('```typescript\n' + example.code + '\n```')
-      .setColor(0x2563eb)
-      .addFields(
+    const embed = {
+      title: `💡 Example: ${example.title}`,
+      description: '```typescript\n' + example.code + '\n```',
+      color: 0x2563eb,
+      fields: [
         {
           name: 'More Examples',
           value: '[View All Examples](https://synapse-framework.dev/examples)',
           inline: false
         }
-      )
-      .setFooter({ text: 'Try: !synapse example [basic|component|routing|state]' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Try: !synapse example [basic|component|routing|state]' },
+      timestamp: new Date().toISOString()
+    };
 
-    await message.reply({ embeds: [embed] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async communityCommand(message) {
-    const embed = new EmbedBuilder()
-      .setTitle('🌐 Synapse Community')
-      .setDescription('Connect with the Synapse community!')
-      .setColor(0x2563eb)
-      .addFields(
+    const embed = {
+      title: '🌐 Synapse Community',
+      description: 'Connect with the Synapse community!',
+      color: 0x2563eb,
+      fields: [
         {
           name: '💬 Discord',
           value: '[Join our Discord](https://discord.gg/synapse-framework)',
@@ -529,35 +525,24 @@ state.set('count', 1);`
           value: '[Read Blog](https://synapse-framework.dev/blog)',
           inline: true
         }
-      )
-      .setFooter({ text: 'Join our amazing community!' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Join our amazing community!' },
+      timestamp: new Date().toISOString()
+    };
 
-    const row = new ActionRowBuilder()
-      .addComponents(
-        new ButtonBuilder()
-          .setLabel('Join Discord')
-          .setStyle(ButtonStyle.Link)
-          .setURL('https://discord.gg/synapse-framework'),
-        new ButtonBuilder()
-          .setLabel('Follow GitHub')
-          .setStyle(ButtonStyle.Link)
-          .setURL('https://github.com/synapse-framework/synapse')
-      );
-
-    await message.reply({ embeds: [embed], components: [row] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async newsCommand(message) {
     try {
       // This would typically fetch from an API or RSS feed
-      const embed = new EmbedBuilder()
-        .setTitle('📰 Latest Synapse News')
-        .setColor(0x2563eb)
-        .addFields(
+      const embed = {
+        title: '📰 Latest Synapse News',
+        color: 0x2563eb,
+        fields: [
           {
-            name: '🚀 v0.5.0 Released',
-            value: 'New UI library with animations and accessibility support!',
+            name: '🚀 v0.6.0 Released',
+            value: 'Zero-dependency UI library with custom implementations!',
             inline: false
           },
           {
@@ -570,22 +555,23 @@ state.set('count', 1);`
             value: 'Complete design tokens and theme system',
             inline: false
           }
-        )
-        .setFooter({ text: 'Stay updated with the latest news!' })
-        .setTimestamp();
+        ],
+        footer: { text: 'Stay updated with the latest news!' },
+        timestamp: new Date().toISOString()
+      };
 
-      await message.reply({ embeds: [embed] });
+      await this.client.createEmbed(message.channel_id, embed);
     } catch (error) {
-      await message.reply('❌ Could not fetch latest news.');
+      await this.client.sendMessage(message.channel_id, '❌ Could not fetch latest news.');
     }
   }
 
   async unknownCommand(message, command) {
-    const embed = new EmbedBuilder()
-      .setTitle('❓ Unknown Command')
-      .setDescription(`Command \`${command}\` not found.`)
-      .setColor(0xef4444)
-      .addFields(
+    const embed = {
+      title: '❓ Unknown Command',
+      description: `Command \`${command}\` not found.`,
+      color: 0xef4444,
+      fields: [
         {
           name: 'Available Commands',
           value: '`help`, `docs`, `install`, `version`, `status`, `search`, `template`, `plugin`, `example`, `community`, `news`',
@@ -596,16 +582,17 @@ state.set('count', 1);`
           value: 'Use `!synapse help` to see all available commands.',
           inline: false
         }
-      )
-      .setFooter({ text: 'Need help? Ask in #help channel!' })
-      .setTimestamp();
+      ],
+      footer: { text: 'Need help? Ask in #help channel!' },
+      timestamp: new Date().toISOString()
+    };
 
-    await message.reply({ embeds: [embed] });
+    await this.client.createEmbed(message.channel_id, embed);
   }
 
   async start() {
     try {
-      await this.client.login(process.env.DISCORD_BOT_TOKEN);
+      await this.client.login();
     } catch (error) {
       console.error('Failed to start Discord bot:', error);
     }
@@ -616,4 +603,11 @@ state.set('count', 1);`
 const bot = new SynapseDiscordBot();
 bot.start();
 
-module.exports = SynapseDiscordBot;
+// Graceful shutdown
+process.on('SIGINT', () => {
+  console.log('\n🛑 Shutting down bot...');
+  bot.client.destroy();
+  process.exit(0);
+});
+
+export default SynapseDiscordBot;

@@ -43,7 +43,7 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: npm run build
+        run: make build
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v4
@@ -182,11 +182,11 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: npm run build
+        run: make build
 
       - name: Start development server
         run: |
-          npm run dev &
+          make dev &
           sleep 10
 
       - name: Check security headers
@@ -212,11 +212,11 @@ jobs:
         run: npm ci
 
       - name: Build project
-        run: npm run build
+        run: make build
 
       - name: Start application
         run: |
-          npm run dev &
+          make dev &
           sleep 15
 
       - name: Run OWASP ZAP baseline scan

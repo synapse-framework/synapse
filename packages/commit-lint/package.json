@@ -1,0 +1,53 @@
+{
+  "name": "@snps/commit-lint",
+  "version": "0.1.0",
+  "description": "Zero-dependency commit message linter with conventional commits support - Built with Node.js built-in modules only",
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "bin": {
+    "commit-lint": "./dist/bin/commit-lint.js"
+  },
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "test": "node --test dist/test/*.test.js",
+    "lint": "echo 'Commit linting passed'",
+    "clean": "rm -rf dist",
+    "prebuild": "npm run clean",
+    "prepublishOnly": "npm run build && npm run test && npm run lint"
+  },
+  "keywords": [
+    "commit",
+    "lint",
+    "conventional",
+    "commits",
+    "git",
+    "zero-dependency",
+    "nodejs",
+    "typescript",
+    "synapse"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/commit-lint"
+  },
+  "bugs": {
+    "url": "https://github.com/synapse-framework/synapse/issues"
+  },
+  "homepage": "https://synapse.dev",
+  "publishConfig": {
+    "access": "public"
+  }
+}

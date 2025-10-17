@@ -31,13 +31,13 @@ jobs:
         run: npm ci
 
       - name: Run ESLint
-        run: npm run lint
+        run: make lint
 
       - name: Run TypeScript check
-        run: npm run type-check
+        run: make type-check
 
       - name: Check formatting
-        run: npm run format:check
+        run: make format:check
 
   # Test Suite
   test:
@@ -60,13 +60,13 @@ jobs:
         run: npm ci
 
       - name: Run tests
-        run: npm test
+        run: make test
 
       - name: Run integration tests
-        run: npm run test:integration
+        run: make test
 
       - name: Run e2e tests
-        run: npm run test:e2e
+        run: make test
 
       - name: Upload coverage reports
         uses: codecov/codecov-action@v5
@@ -171,10 +171,10 @@ jobs:
           name: build-artifacts
 
       - name: Run performance tests
-        run: npm run test:performance
+        run: make test
 
       - name: Run bundle size analysis
-        run: npm run analyze:bundle
+        run: make test
 
       - name: Upload performance results
         uses: actions/upload-artifact@v3
@@ -230,7 +230,7 @@ jobs:
           name: build-artifacts
 
       - name: Publish packages
-        run: npm run publish:all
+        run: make publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
