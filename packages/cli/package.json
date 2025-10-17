@@ -1,6 +1,6 @@
 {
   "name": "@snps/cli",
-  "version": "2.0.7",
+  "version": "2.0.8",
   "description": "🚀 The Ultimate Development CLI - 15+ powerful features including AI assistance, real-time collaboration, cloud sync, performance optimization, and much more!",
   "type": "module",
   "main": "dist/index.js",

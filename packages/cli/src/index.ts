@@ -9,7 +9,7 @@
  */
 
 import { promises as fs } from 'fs';
-import { join, resolve } from 'path';
+import { join, resolve, dirname } from 'path';
 import { spawn } from 'child_process';
 
 // Import TypeScript wrapper and types

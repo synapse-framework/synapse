@@ -1,6 +1,6 @@
 {
   "name": "@snps/ui",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "description": "Comprehensive UI component library for Synapse Framework - 100+ beautiful, accessible, and performant components - ZERO DEPENDENCIES",
   "type": "module",
   "main": "dist/index.js",
