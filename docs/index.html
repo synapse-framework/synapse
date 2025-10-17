@@ -1,1 +1,1015 @@
-<h1>Documentation</h1><p>Synapse Framework Documentation</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synapse Framework Documentation</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        .sidebar {
+            width: 300px;
+            background: #2d3748;
+            color: white;
+            padding: 2rem 0;
+            overflow-y: auto;
+            position: fixed;
+            height: 100vh;
+        }
+        
+        .sidebar h2 {
+            padding: 0 2rem 1rem;
+            color: #e2e8f0;
+            border-bottom: 1px solid #4a5568;
+            margin-bottom: 1rem;
+        }
+        
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+        
+        .nav-section h3 {
+            padding: 0 2rem 0.5rem;
+            color: #a0aec0;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+        
+        .nav-item {
+            display: block;
+            padding: 0.75rem 2rem;
+            color: #e2e8f0;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+        
+        .nav-item:hover {
+            background: #4a5568;
+            border-left-color: #667eea;
+        }
+        
+        .nav-item.active {
+            background: #4a5568;
+            border-left-color: #667eea;
+            color: #667eea;
+        }
+        
+        .main-content {
+            flex: 1;
+            margin-left: 300px;
+            padding: 2rem;
+            max-width: 800px;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 4rem 2rem;
+            border-radius: 16px;
+            margin-bottom: 3rem;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            background: white;
+            color: #667eea;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+        }
+        
+        .btn.secondary {
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+        }
+        
+        .section {
+            margin-bottom: 3rem;
+        }
+        
+        .section h2 {
+            color: #2d3748;
+            margin-bottom: 1rem;
+            font-size: 2rem;
+        }
+        
+        .section h3 {
+            color: #4a5568;
+            margin: 2rem 0 1rem;
+            font-size: 1.5rem;
+        }
+        
+        .section h4 {
+            color: #4a5568;
+            margin: 1.5rem 0 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .code-block {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+        
+        .code-block::before {
+            content: attr(data-lang);
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: #4a5568;
+            color: #a0aec0;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .feature-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            border-left: 4px solid #667eea;
+        }
+        
+        .feature-card h4 {
+            color: #2d3748;
+            margin-bottom: 0.5rem;
+        }
+        
+        .feature-card p {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        
+        .api-table th {
+            background: #f7fafc;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+            color: #2d3748;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .api-table td {
+            padding: 1rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .api-table tr:hover {
+            background: #f7fafc;
+        }
+        
+        .badge {
+            display: inline-block;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+        
+        .badge.success { background: #d4edda; color: #155724; }
+        .badge.warning { background: #fff3cd; color: #856404; }
+        .badge.info { background: #d1ecf1; color: #0c5460; }
+        
+        .toc {
+            background: #f7fafc;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 2rem 0;
+        }
+        
+        .toc h3 {
+            margin-bottom: 1rem;
+            color: #2d3748;
+        }
+        
+        .toc ul {
+            list-style: none;
+        }
+        
+        .toc li {
+            margin: 0.5rem 0;
+        }
+        
+        .toc a {
+            color: #667eea;
+            text-decoration: none;
+        }
+        
+        .toc a:hover {
+            text-decoration: underline;
+        }
+        
+        @media (max-width: 768px) {
+            .container { flex-direction: column; }
+            .sidebar { width: 100%; position: static; height: auto; }
+            .main-content { margin-left: 0; }
+            .hero h1 { font-size: 2rem; }
+            .hero-buttons { flex-direction: column; align-items: center; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="sidebar">
+            <h2>📚 Synapse Docs</h2>
+            
+            <div class="nav-section">
+                <h3>Getting Started</h3>
+                <a href="#introduction" class="nav-item active">Introduction</a>
+                <a href="#installation" class="nav-item">Installation</a>
+                <a href="#quick-start" class="nav-item">Quick Start</a>
+                <a href="#examples" class="nav-item">Examples</a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Core Concepts</h3>
+                <a href="#architecture" class="nav-item">Architecture</a>
+                <a href="#state-management" class="nav-item">State Management</a>
+                <a href="#routing" class="nav-item">Routing</a>
+                <a href="#components" class="nav-item">Components</a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Development</h3>
+                <a href="#testing" class="nav-item">Testing</a>
+                <a href="#linting" class="nav-item">Linting</a>
+                <a href="#cli" class="nav-item">CLI Tools</a>
+                <a href="#build" class="nav-item">Build System</a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>API Reference</h3>
+                <a href="#core-api" class="nav-item">Core API</a>
+                <a href="#ui-api" class="nav-item">UI API</a>
+                <a href="#testing-api" class="nav-item">Testing API</a>
+                <a href="#cli-api" class="nav-item">CLI API</a>
+            </div>
+            
+            <div class="nav-section">
+                <h3>Advanced</h3>
+                <a href="#plugins" class="nav-item">Plugins</a>
+                <a href="#performance" class="nav-item">Performance</a>
+                <a href="#deployment" class="nav-item">Deployment</a>
+                <a href="#troubleshooting" class="nav-item">Troubleshooting</a>
+            </div>
+        </nav>
+        
+        <main class="main-content">
+            <div class="hero">
+                <h1>Synapse Framework</h1>
+                <p>Zero-dependency, TypeScript-first fullstack web framework with strict enforcement of best practices and TDD</p>
+                <div class="hero-buttons">
+                    <a href="#quick-start" class="btn">Get Started</a>
+                    <a href="#examples" class="btn secondary">View Examples</a>
+                </div>
+            </div>
+            
+            <section id="introduction" class="section">
+                <h2>🚀 Introduction</h2>
+                <p>Synapse is a revolutionary web framework that combines the power of TypeScript with Rust performance, enforcing best practices through strict linting and mandatory TDD. Built with zero external dependencies, it provides everything you need to build modern web applications.</p>
+                
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>🎯 Zero Dependencies</h4>
+                        <p>Everything built from scratch - no external dependencies to manage or maintain.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚡ High Performance</h4>
+                        <p>Rust-powered compiler with 10x faster compilation and parallel processing.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🧪 TDD Enforced</h4>
+                        <p>Mandatory test-driven development with 100% coverage requirement.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🔍 Strict Linting</h4>
+                        <p>92 strict rules enforcing best practices and code quality.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🎨 Self-Made UI</h4>
+                        <p>Complete UI component library built from scratch, no external dependencies.</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>🌐 Universal Support</h4>
+                        <p>Works with any database, storage solution, hosting platform, or protocol.</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="installation" class="section">
+                <h2>📦 Installation</h2>
+                
+                <h3>Global Installation</h3>
+                <div class="code-block" data-lang="bash">
+npm install -g @snps/cli
+                </div>
+                
+                <h3>Project Installation</h3>
+                <div class="code-block" data-lang="bash">
+# Install core packages
+npm install @snps/core @snps/ui @snps/testing @snps/linting
+
+# Or install all packages
+npm install @snps/core @snps/ui @snps/cli @snps/testing @snps/linting @snps/router @snps/state @snps/plugins
+                </div>
+                
+                <h3>Verify Installation</h3>
+                <div class="code-block" data-lang="bash">
+synapse --version
+# Should output: Synapse CLI v2.0.8
+                </div>
+            </section>
+            
+            <section id="quick-start" class="section">
+                <h2>⚡ Quick Start</h2>
+                
+                <h3>1. Create a New Project</h3>
+                <div class="code-block" data-lang="bash">
+synapse init my-awesome-app
+cd my-awesome-app
+                </div>
+                
+                <h3>2. Start Development Server</h3>
+                <div class="code-block" data-lang="bash">
+synapse dev
+# Server running at http://localhost:3000
+                </div>
+                
+                <h3>3. Write Your First Component</h3>
+                <div class="code-block" data-lang="typescript">
+import { SynapseFramework } from '@snps/core';
+import { Button, Input } from '@snps/ui';
+
+const app = new SynapseFramework();
+
+// Create state
+const state = app.createState({
+  count: 0,
+  message: 'Hello Synapse!'
+});
+
+// Create component
+const Counter = app.createComponent('div', {
+  render: () => `
+    <h1>${state.get('message')}</h1>
+    <p>Count: ${state.get('count')}</p>
+    <button onclick="increment()">Increment</button>
+  `,
+  methods: {
+    increment: () => state.update('count', c => c + 1)
+  }
+});
+
+// Add route
+app.addRoute('/', Counter);
+
+// Start app
+app.start();
+                </div>
+                
+                <h3>4. Run Tests</h3>
+                <div class="code-block" data-lang="bash">
+synapse test
+# All tests pass ✅
+                </div>
+                
+                <h3>5. Build for Production</h3>
+                <div class="code-block" data-lang="bash">
+synapse build
+# Optimized build created in dist/
+                </div>
+            </section>
+            
+            <section id="architecture" class="section">
+                <h2>🏗️ Architecture</h2>
+                
+                <p>Synapse follows a dual-layer architecture with TypeScript for developer experience and Rust for performance-critical operations.</p>
+                
+                <div class="code-block" data-lang="text">
+┌─────────────────────────────────────────┐
+│              TypeScript Layer           │
+├─────────────────────────────────────────┤
+│  • CLI Interface (@snps/cli)           │
+│  • Core Framework (@snps/core)         │
+│  • UI Components (@snps/ui)            │
+│  • Testing (@snps/testing)             │
+│  • Linting (@snps/linting)             │
+│  • Router (@snps/router)               │
+│  • State (@snps/state)                 │
+│  • Plugins (@snps/plugins)             │
+├─────────────────────────────────────────┤
+│              Rust Layer                 │
+├─────────────────────────────────────────┤
+│  • High-performance compiler (SWC)     │
+│  • Parallel processing (Rayon)         │
+│  • Bundler with tree-shaking           │
+│  • Source map generation               │
+│  • Minification engine                 │
+│  • Caching system                      │
+└─────────────────────────────────────────┘
+                </div>
+                
+                <h3>Key Design Principles</h3>
+                <ul>
+                    <li><strong>Zero Dependencies:</strong> Everything built from scratch</li>
+                    <li><strong>TypeScript-First:</strong> Full type safety throughout</li>
+                    <li><strong>Performance:</strong> Rust backend for speed-critical operations</li>
+                    <li><strong>Strict Enforcement:</strong> No escape hatches from best practices</li>
+                    <li><strong>TDD Mandatory:</strong> 100% test coverage required</li>
+                    <li><strong>Universal Support:</strong> Works with any technology stack</li>
+                </ul>
+            </section>
+            
+            <section id="state-management" class="section">
+                <h2>📊 State Management</h2>
+                
+                <p>Synapse provides a reactive state management system with immutable updates and automatic change detection.</p>
+                
+                <h3>Creating State</h3>
+                <div class="code-block" data-lang="typescript">
+import { SynapseFramework } from '@snps/core';
+
+const app = new SynapseFramework();
+
+// Create state with initial values
+const state = app.createState({
+  user: { name: 'John', email: 'john@example.com' },
+  todos: [],
+  theme: 'light'
+});
+                </div>
+                
+                <h3>Updating State</h3>
+                <div class="code-block" data-lang="typescript">
+// Update single property
+state.update('theme', 'dark');
+
+// Update with function
+state.update('todos', todos => [...todos, {
+  id: Date.now(),
+  text: 'New todo',
+  completed: false
+}]);
+
+// Update nested property
+state.update('user.name', 'Jane');
+                </div>
+                
+                <h3>Subscribing to Changes</h3>
+                <div class="code-block" data-lang="typescript">
+// Subscribe to specific property
+state.subscribe('todos', (todos) => {
+  console.log('Todos updated:', todos);
+});
+
+// Subscribe to all changes
+state.subscribe('*', (newState, oldState) => {
+  console.log('State changed:', { newState, oldState });
+});
+                </div>
+                
+                <h3>State API Reference</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Method</th>
+                            <th>Description</th>
+                            <th>Returns</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>state.get(key)</code></td>
+                            <td>Get current value of a property</td>
+                            <td>any</td>
+                        </tr>
+                        <tr>
+                            <td><code>state.update(key, value)</code></td>
+                            <td>Update a property value</td>
+                            <td>void</td>
+                        </tr>
+                        <tr>
+                            <td><code>state.subscribe(key, callback)</code></td>
+                            <td>Subscribe to property changes</td>
+                            <td>unsubscribe function</td>
+                        </tr>
+                        <tr>
+                            <td><code>state.reset()</code></td>
+                            <td>Reset state to initial values</td>
+                            <td>void</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section id="routing" class="section">
+                <h2>🛣️ Routing</h2>
+                
+                <p>Universal routing system that works on both client and server with support for dynamic routes, guards, and middleware.</p>
+                
+                <h3>Basic Routing</h3>
+                <div class="code-block" data-lang="typescript">
+import { SynapseFramework } from '@snps/core';
+
+const app = new SynapseFramework();
+
+// Add routes
+app.addRoute('/', () => 'Home Page');
+app.addRoute('/about', () => 'About Page');
+app.addRoute('/contact', () => 'Contact Page');
+
+// Dynamic routes
+app.addRoute('/users/:id', (params) => `User: ${params.id}`);
+app.addRoute('/posts/:year/:month', (params) => 
+  `Posts for ${params.year}/${params.month}`
+);
+                </div>
+                
+                <h3>Route Guards</h3>
+                <div class="code-block" data-lang="typescript">
+// Authentication guard
+app.addGuard('/dashboard', (user) => user?.isAuthenticated);
+
+// Role-based guard
+app.addGuard('/admin', (user) => user?.role === 'admin');
+
+// Custom guard
+app.addGuard('/profile', (user, params) => {
+  return user?.id === params.userId;
+});
+                </div>
+                
+                <h3>Navigation</h3>
+                <div class="code-block" data-lang="typescript">
+// Programmatic navigation
+app.navigate('/dashboard');
+
+// Navigate with state
+app.navigate('/users/123', { tab: 'profile' });
+
+// Back/forward
+app.goBack();
+app.goForward();
+
+// Get current route
+const currentRoute = app.getCurrentRoute();
+                </div>
+            </section>
+            
+            <section id="components" class="section">
+                <h2>🎨 Components</h2>
+                
+                <p>Self-made UI component library with no external dependencies. All components are built from scratch and optimized for performance.</p>
+                
+                <h3>Using Components</h3>
+                <div class="code-block" data-lang="typescript">
+import { Button, Input, Modal, Card } from '@snps/ui';
+
+// Basic usage
+const button = new Button({
+  text: 'Click me',
+  variant: 'primary',
+  onClick: () => console.log('Clicked!')
+});
+
+// Input component
+const input = new Input({
+  type: 'email',
+  placeholder: 'Enter your email',
+  onChange: (value) => console.log(value)
+});
+                </div>
+                
+                <h3>Creating Custom Components</h3>
+                <div class="code-block" data-lang="typescript">
+import { Component } from '@snps/ui';
+
+class TodoItem extends Component {
+  constructor(props) {
+    super(props);
+    this.state = { completed: false };
+  }
+  
+  render() {
+    return `
+      <div class="todo-item ${this.state.completed ? 'completed' : ''}">
+        <input type="checkbox" ${this.state.completed ? 'checked' : ''}>
+        <span>${this.props.text}</span>
+        <button onclick="this.toggle()">Toggle</button>
+      </div>
+    `;
+  }
+  
+  toggle() {
+    this.setState({ completed: !this.state.completed });
+  }
+}
+                </div>
+                
+                <h3>Available Components</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Button</h4>
+                        <p>Primary, secondary, danger variants with hover effects</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Input</h4>
+                        <p>Text, email, password inputs with validation</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Modal</h4>
+                        <p>Confirmation, alert, and custom modals</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Card</h4>
+                        <p>Content cards with headers and footers</p>
+                    </div>
+                </div>
+            </section>
+            
+            <section id="testing" class="section">
+                <h2>🧪 Testing</h2>
+                
+                <p>TDD is mandatory in Synapse. Every piece of code must have accompanying tests with 100% coverage requirement.</p>
+                
+                <h3>Writing Tests</h3>
+                <div class="code-block" data-lang="typescript">
+import { describe, it, expect } from '@snps/testing';
+
+describe('Counter Component', () => {
+  it('should increment count when button clicked', () => {
+    const counter = new Counter({ initialCount: 0 });
+    counter.increment();
+    expect(counter.getCount()).toBe(1);
+  });
+  
+  it('should reset count to zero', () => {
+    const counter = new Counter({ initialCount: 5 });
+    counter.reset();
+    expect(counter.getCount()).toBe(0);
+  });
+});
+                </div>
+                
+                <h3>Running Tests</h3>
+                <div class="code-block" data-lang="bash">
+# Run all tests
+synapse test
+
+# Run tests in watch mode
+synapse test --watch
+
+# Run specific test file
+synapse test src/components/Counter.test.ts
+
+# Run with coverage
+synapse test --coverage
+                </div>
+                
+                <h3>Test Coverage</h3>
+                <p>Synapse enforces 100% test coverage. Build will fail if coverage is below 100%.</p>
+                <div class="code-block" data-lang="text">
+Coverage Report:
+- Lines: 100% (1000/1000)
+- Functions: 100% (150/150)
+- Branches: 100% (200/200)
+- Statements: 100% (1000/1000)
+
+✅ All tests passed!
+✅ Coverage requirement met!
+                </div>
+            </section>
+            
+            <section id="cli" class="section">
+                <h2>🛠️ CLI Tools</h2>
+                
+                <p>Comprehensive command-line interface for all development tasks.</p>
+                
+                <h3>Project Management</h3>
+                <div class="code-block" data-lang="bash">
+# Initialize new project
+synapse init my-app
+
+# Generate code
+synapse generate component Button
+synapse generate route /users
+synapse generate test Counter
+
+# Start development server
+synapse dev --port=3000
+
+# Build for production
+synapse build --minify
+
+# Deploy to platform
+synapse deploy --platform=vercel
+                </div>
+                
+                <h3>Development Commands</h3>
+                <div class="code-block" data-lang="bash">
+# Run tests
+synapse test
+
+# Lint code
+synapse lint
+
+# Format code
+synapse format
+
+# Check dependencies
+synapse check-deps
+
+# Update packages
+synapse update
+                </div>
+                
+                <h3>Available Commands</h3>
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th>Command</th>
+                            <th>Description</th>
+                            <th>Options</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>synapse init</code></td>
+                            <td>Create new project</td>
+                            <td>--template, --typescript</td>
+                        </tr>
+                        <tr>
+                            <td><code>synapse dev</code></td>
+                            <td>Start development server</td>
+                            <td>--port, --host, --open</td>
+                        </tr>
+                        <tr>
+                            <td><code>synapse build</code></td>
+                            <td>Build for production</td>
+                            <td>--minify, --sourcemap</td>
+                        </tr>
+                        <tr>
+                            <td><code>synapse test</code></td>
+                            <td>Run tests</td>
+                            <td>--watch, --coverage</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+            
+            <section id="performance" class="section">
+                <h2>⚡ Performance</h2>
+                
+                <p>Synapse is built for performance with Rust-powered compilation and optimized runtime.</p>
+                
+                <h3>Performance Metrics</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <h4>Compilation Speed</h4>
+                        <p>10x faster than traditional TypeScript compiler</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Parallel Processing</h4>
+                        <p>5x speedup with multi-threaded compilation</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Memory Usage</h4>
+                        <p>45MB base runtime, optimized for efficiency</p>
+                    </div>
+                    <div class="feature-card">
+                        <h4>Bundle Size</h4>
+                        <p>Tree-shaking and code-splitting for minimal bundles</p>
+                    </div>
+                </div>
+                
+                <h3>Optimization Features</h3>
+                <ul>
+                    <li><strong>Tree Shaking:</strong> Remove unused code automatically</li>
+                    <li><strong>Code Splitting:</strong> Split code into optimal chunks</li>
+                    <li><strong>Minification:</strong> Compress code for production</li>
+                    <li><strong>Caching:</strong> Intelligent cache invalidation</li>
+                    <li><strong>Parallel Processing:</strong> Multi-threaded compilation</li>
+                    <li><strong>Source Maps:</strong> Debug-friendly source mapping</li>
+                </ul>
+            </section>
+            
+            <section id="deployment" class="section">
+                <h2>🚀 Deployment</h2>
+                
+                <p>Deploy your Synapse applications to any platform with built-in deployment tools.</p>
+                
+                <h3>Build for Production</h3>
+                <div class="code-block" data-lang="bash">
+# Build with optimizations
+synapse build --minify --sourcemap
+
+# Build for specific platform
+synapse build --platform=node
+synapse build --platform=browser
+                </div>
+                
+                <h3>Deploy to Platforms</h3>
+                <div class="code-block" data-lang="bash">
+# Deploy to Vercel
+synapse deploy --platform=vercel
+
+# Deploy to Netlify
+synapse deploy --platform=netlify
+
+# Deploy to AWS
+synapse deploy --platform=aws
+
+# Deploy to Docker
+synapse deploy --platform=docker
+                </div>
+                
+                <h3>Environment Configuration</h3>
+                <div class="code-block" data-lang="typescript">
+// synapse.config.ts
+export default {
+  build: {
+    minify: true,
+    sourcemap: true,
+    target: 'es2020'
+  },
+  deploy: {
+    platform: 'vercel',
+    env: {
+      NODE_ENV: 'production'
+    }
+  }
+};
+                </div>
+            </section>
+            
+            <section id="troubleshooting" class="section">
+                <h2>🔧 Troubleshooting</h2>
+                
+                <h3>Common Issues</h3>
+                
+                <h4>Build Errors</h4>
+                <div class="code-block" data-lang="bash">
+# Clear cache and rebuild
+synapse clean
+synapse build
+
+# Check for TypeScript errors
+synapse check-types
+                </div>
+                
+                <h4>Test Failures</h4>
+                <div class="code-block" data-lang="bash">
+# Run tests with verbose output
+synapse test --verbose
+
+# Run specific test
+synapse test --grep "Counter"
+                </div>
+                
+                <h4>Linting Issues</h4>
+                <div class="code-block" data-lang="bash">
+# Auto-fix linting issues
+synapse lint --fix
+
+# Check specific file
+synapse lint src/components/Button.ts
+                </div>
+                
+                <h3>Getting Help</h3>
+                <ul>
+                    <li>📚 <a href="#introduction">Documentation</a> - Comprehensive guides</li>
+                    <li>💬 <a href="https://github.com/synapse-framework/synapse/discussions">Discussions</a> - Community support</li>
+                    <li>🐛 <a href="https://github.com/synapse-framework/synapse/issues">Issues</a> - Bug reports</li>
+                    <li>💡 <a href="https://github.com/synapse-framework/synapse/discussions/categories/ideas">Ideas</a> - Feature requests</li>
+                </ul>
+            </section>
+        </main>
+    </div>
+    
+    <script>
+        // Simple navigation
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('click', (e) => {
+                e.preventDefault();
+                
+                // Remove active class from all items
+                document.querySelectorAll('.nav-item').forEach(nav => {
+                    nav.classList.remove('active');
+                });
+                
+                // Add active class to clicked item
+                item.classList.add('active');
+                
+                // Scroll to section
+                const targetId = item.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Add smooth scrolling to all internal links
+        document.querySelectorAll('a[href^="#"]').forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const targetId = link.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+        
+        // Highlight current section in navigation
+        const sections = document.querySelectorAll('.section');
+        const navItems = document.querySelectorAll('.nav-item');
+        
+        function updateActiveNav() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= (sectionTop - 200)) {
+                    current = section.getAttribute('id');
+                }
+            });
+            
+            navItems.forEach(item => {
+                item.classList.remove('active');
+                if (item.getAttribute('href') === `#${current}`) {
+                    item.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', updateActiveNav);
+        updateActiveNav();
+    </script>
+</body>
+</html>
