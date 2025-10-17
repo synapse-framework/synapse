@@ -1,0 +1,285 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main
+      - feature/rust-packages-and-documentation
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
+jobs:
+  # Build and test dashboard
+  build-dashboard:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: synapse-demo-app/synapse-dashboard/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd synapse-demo-app/synapse-dashboard
+          npm ci
+
+      - name: Build dashboard
+        run: |
+          cd synapse-demo-app/synapse-dashboard
+          npm run build
+
+      - name: Test dashboard
+        run: |
+          cd synapse-demo-app/synapse-dashboard
+          npm test
+
+      - name: Upload dashboard artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: dashboard-build
+          path: synapse-demo-app/synapse-dashboard/dist
+
+  # Build and test documentation
+  build-docs:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+          cache-dependency-path: synapse-demo-app/synapse-docs/package-lock.json
+
+      - name: Install dependencies
+        run: |
+          cd synapse-demo-app/synapse-docs
+          npm ci
+
+      - name: Build documentation
+        run: |
+          cd synapse-demo-app/synapse-docs
+          npm run build:docs
+
+      - name: Test documentation
+        run: |
+          cd synapse-demo-app/synapse-docs
+          npm test
+
+      - name: Upload docs artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: docs-build
+          path: synapse-demo-app/synapse-docs/dist
+
+  # Deploy to GitHub Pages
+  deploy:
+    runs-on: ubuntu-latest
+    needs: [build-dashboard, build-docs]
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Download dashboard artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dashboard-build
+          path: dashboard
+
+      - name: Download docs artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: docs-build
+          path: docs
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Create deployment structure
+        run: |
+          mkdir -p gh-pages
+          cp -r dashboard/* gh-pages/
+          mkdir -p gh-pages/docs
+          cp -r docs/* gh-pages/docs/
+          
+          # Create .nojekyll file (critical for GitHub Pages)
+          touch gh-pages/.nojekyll
+          
+          # Create index.html for root
+          cat > gh-pages/index.html << 'EOF'
+          <!DOCTYPE html>
+          <html lang="en">
+          <head>
+              <meta charset="UTF-8">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <title>Synapse Framework Demo Applications</title>
+              <style>
+                  body { 
+                      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; 
+                      margin: 0; 
+                      padding: 2rem; 
+                      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); 
+                      min-height: 100vh; 
+                      color: white; 
+                  }
+                  .container { 
+                      max-width: 800px; 
+                      margin: 0 auto; 
+                      text-align: center; 
+                  }
+                  h1 { 
+                      font-size: 3rem; 
+                      margin-bottom: 1rem; 
+                      text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+                  }
+                  p { 
+                      font-size: 1.2rem; 
+                      margin-bottom: 2rem; 
+                      opacity: 0.9; 
+                  }
+                  .apps { 
+                      display: grid; 
+                      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+                      gap: 2rem; 
+                      margin: 3rem 0; 
+                  }
+                  .app-card { 
+                      background: rgba(255,255,255,0.1); 
+                      backdrop-filter: blur(10px); 
+                      border-radius: 12px; 
+                      padding: 2rem; 
+                      transition: transform 0.3s ease; 
+                      border: 1px solid rgba(255,255,255,0.2);
+                  }
+                  .app-card:hover { 
+                      transform: translateY(-5px); 
+                      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+                  }
+                  .app-card h3 { 
+                      font-size: 1.5rem; 
+                      margin-bottom: 1rem; 
+                  }
+                  .app-card p { 
+                      margin-bottom: 1.5rem; 
+                  }
+                  .btn { 
+                      display: inline-block; 
+                      padding: 1rem 2rem; 
+                      background: white; 
+                      color: #667eea; 
+                      text-decoration: none; 
+                      border-radius: 8px; 
+                      font-weight: 600; 
+                      transition: all 0.3s ease; 
+                  }
+                  .btn:hover { 
+                      transform: translateY(-2px); 
+                      box-shadow: 0 8px 25px rgba(0,0,0,0.2); 
+                  }
+                  .status {
+                      background: rgba(0,255,0,0.1);
+                      border: 1px solid rgba(0,255,0,0.3);
+                      border-radius: 8px;
+                      padding: 1rem;
+                      margin: 2rem 0;
+                  }
+                  .features {
+                      display: grid;
+                      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+                      gap: 1rem;
+                      margin: 2rem 0;
+                  }
+                  .feature {
+                      background: rgba(255,255,255,0.05);
+                      padding: 1rem;
+                      border-radius: 8px;
+                      text-align: center;
+                  }
+              </style>
+          </head>
+          <body>
+              <div class="container">
+                  <h1>🚀 Synapse Framework</h1>
+                  <p>Comprehensive demonstration applications showcasing modern web development with TypeScript, Rust integration, and cutting-edge UI components.</p>
+                  
+                  <div class="status">
+                      <h3>✅ Framework Status: PRODUCTION READY</h3>
+                      <p>All core APIs working • CLI build process functional • Demo applications deployed</p>
+                  </div>
+                  
+                  <div class="apps">
+                      <div class="app-card">
+                          <h3>📊 Dashboard Demo</h3>
+                          <p>Interactive dashboard showcasing real-time metrics, security scanning, AI optimization, and comprehensive framework features.</p>
+                          <a href="./" class="btn">Launch Dashboard</a>
+                      </div>
+                      
+                      <div class="app-card">
+                          <h3>📚 Documentation</h3>
+                          <p>Full-featured documentation website built entirely with Synapse, featuring interactive navigation, search, and comprehensive guides.</p>
+                          <a href="./docs/" class="btn">View Documentation</a>
+                      </div>
+                  </div>
+                  
+                  <div class="features">
+                      <div class="feature">
+                          <h4>🔧 Core APIs</h4>
+                          <p>Working state management, routing, testing, and linting</p>
+                      </div>
+                      <div class="feature">
+                          <h4>🛠️ CLI Tools</h4>
+                          <p>Functional build process with TypeScript compilation</p>
+                      </div>
+                      <div class="feature">
+                          <h4>🎨 UI Components</h4>
+                          <p>Self-made components with fixed import issues</p>
+                      </div>
+                      <div class="feature">
+                          <h4>📦 NPM Packages</h4>
+                          <p>Published and available: @snps/core, @snps/ui, @snps/cli</p>
+                      </div>
+                  </div>
+                  
+                  <p style="margin-top: 3rem; opacity: 0.7;">
+                      Built with ❤️ using the Synapse Framework<br>
+                      <small>Zero dependencies • TypeScript-first • Rust-powered • Production ready</small>
+                  </p>
+              </div>
+          </body>
+          </html>
+          EOF
+
+      - name: Upload Pages artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: gh-pages
+
+  # Deploy to GitHub Pages
+  deploy-pages:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: deploy
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
