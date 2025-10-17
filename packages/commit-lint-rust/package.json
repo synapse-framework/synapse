@@ -1,8 +1,7 @@
 {
   "name": "@snps/commit-lint-rust",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Zero-dependency high-performance commit linter built with Rust - 20x faster than commitlint",
-  "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
   "bin": {
@@ -73,12 +72,12 @@
     "@napi-rs/cli": "^2.18.0"
   },
   "optionalDependencies": {
-    "@snps/commit-lint-rust-win32-x64-msvc": "0.1.0",
-    "@snps/commit-lint-rust-darwin-x64": "0.1.0",
-    "@snps/commit-lint-rust-linux-x64-gnu": "0.1.0",
-    "@snps/commit-lint-rust-linux-x64-musl": "0.1.0",
-    "@snps/commit-lint-rust-linux-arm64-gnu": "0.1.0",
-    "@snps/commit-lint-rust-darwin-arm64": "0.1.0",
-    "@snps/commit-lint-rust-linux-arm-gnueabihf": "0.1.0"
+    "@snps/commit-lint-rust-win32-x64-msvc": "0.2.1",
+    "@snps/commit-lint-rust-darwin-x64": "0.2.1",
+    "@snps/commit-lint-rust-linux-x64-gnu": "0.2.1",
+    "@snps/commit-lint-rust-linux-x64-musl": "0.2.1",
+    "@snps/commit-lint-rust-linux-arm64-gnu": "0.2.1",
+    "@snps/commit-lint-rust-darwin-arm64": "0.2.1",
+    "@snps/commit-lint-rust-linux-arm-gnueabihf": "0.2.1"
   }
 }

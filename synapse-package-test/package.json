@@ -1,0 +1,27 @@
+{
+  "name": "synapse-package-test",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@snps/cli": "^2.0.7",
+    "@snps/commit-lint-rust": "^0.2.0",
+    "@snps/commit-lint-rust-linux-x64-gnu": "^0.2.1",
+    "@snps/core": "^0.3.0",
+    "@snps/env-parser-rust": "^0.2.0",
+    "@snps/http-client-rust": "^0.2.0",
+    "@snps/linting": "^0.3.1",
+    "@snps/plugins": "^0.3.1",
+    "@snps/router": "^0.3.0",
+    "@snps/rule-engine-rust": "^0.2.0",
+    "@snps/state": "^0.3.1",
+    "@snps/testing": "^0.3.1",
+    "@snps/ui": "^0.6.1"
+  }
+}

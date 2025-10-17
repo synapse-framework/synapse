@@ -1,0 +1,27 @@
+{
+  "name": "@snps/rule-engine-rust-linux-x64-gnu",
+  "version": "0.2.1",
+  "description": "Linux x64 GNU binary for @snps/rule-engine-rust",
+  "os": [
+    "linux"
+  ],
+  "cpu": [
+    "x64"
+  ],
+  "main": "snps-rule-engine-rust.linux-x64-gnu.node",
+  "files": [
+    "snps-rule-engine-rust.linux-x64-gnu.node"
+  ],
+  "license": "MIT",
+  "engines": {
+    "node": ">= 10"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse.git",
+    "directory": "packages/rule-engine-rust"
+  },
+  "publishConfig": {
+    "access": "public"
+  }
+}

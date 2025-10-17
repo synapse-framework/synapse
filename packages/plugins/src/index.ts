@@ -2,8 +2,8 @@
  * @snps/plugins - Synapse Framework Plugin System - Extensible architecture with strict guidelines
  */
 
-export class SynapsePlugins {
-  public readonly name = 'SynapsePlugins';
+export class SynapsePluginSystem {
+  public readonly name = 'SynapsePluginSystem';
   public readonly version = '0.1.0';
 
   constructor() {
@@ -23,5 +23,8 @@ export class SynapsePlugins {
   }
 }
 
+// Backward compatibility alias
+export const SynapsePlugins = SynapsePluginSystem;
+
 // Default export
-export default SynapsePlugins;
+export default SynapsePluginSystem;

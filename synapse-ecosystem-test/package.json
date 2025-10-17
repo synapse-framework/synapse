@@ -1,0 +1,55 @@
+{
+  "name": "synapse-ecosystem-test",
+  "version": "1.0.0",
+  "description": "Comprehensive test suite for the entire Synapse ecosystem",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "test": "node --test tests/**/*.test.js",
+    "test:core": "node --test tests/core/*.test.js",
+    "test:rust": "node --test tests/rust/*.test.js",
+    "test:ui": "node --test tests/ui/*.test.js",
+    "test:integration": "node --test tests/integration/*.test.js",
+    "test:e2e": "node --test tests/e2e/*.test.js",
+    "start": "node src/app.js",
+    "dev": "node --watch src/app.js",
+    "build": "node build.js",
+    "lint": "node lint.js"
+  },
+  "dependencies": {
+    "@snps/auth": "^0.0.1",
+    "@snps/cli": "^0.3.0",
+    "@snps/commit-lint-rust": "^0.2.0",
+    "@snps/compiler": "^0.3.0",
+    "@snps/core": "^0.3.0",
+    "@snps/database": "^0.0.1",
+    "@snps/docs": "^1.0.0",
+    "@snps/email": "^1.0.0",
+    "@snps/env-parser-rust": "^0.2.0",
+    "@snps/graphql": "^1.0.0",
+    "@snps/http-client-rust": "^0.2.0",
+    "@snps/linting": "^0.3.0",
+    "@snps/notifications": "^1.0.0",
+    "@snps/plugins": "^0.3.0",
+    "@snps/router": "^0.3.0",
+    "@snps/routing": "^0.0.1",
+    "@snps/rule-engine-rust": "^0.2.0",
+    "@snps/stakeholder": "^1.0.2",
+    "@snps/state": "^0.3.0",
+    "@snps/templating": "^0.0.1",
+    "@snps/testing": "^0.3.0",
+    "@snps/ui": "^0.5.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0"
+  },
+  "keywords": [
+    "synapse",
+    "testing",
+    "ecosystem",
+    "comprehensive",
+    "fullstack"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT"
+}

@@ -18,7 +18,7 @@ pub struct RuleEngine {
 #[derive(Serialize, Deserialize, Clone)]
 pub struct Rule {
     pub id: String,
-    pub category: String,
+    pub category: Option<String>,
     pub severity: String,
     pub title: String,
     pub description: String,
@@ -233,7 +233,7 @@ impl RuleEngine {
                                     column_number: None,
                                     message: format!("{}: {}", rule.title, rule.description),
                                     severity: rule.severity.clone(),
-                                    category: rule.category.clone(),
+                                    category: rule.category.clone().unwrap_or_else(|| "default".to_string()),
                                     auto_fixable: self.is_auto_fixable(rule),
                                     suggested_fix: self.generate_suggested_fix(rule, line),
                                     created_at: chrono::Utc::now().to_rfc3339(),
@@ -255,7 +255,7 @@ impl RuleEngine {
                                 column_number: None,
                                 message: format!("{}: {}", rule.title, rule.description),
                                 severity: rule.severity.clone(),
-                                category: rule.category.clone(),
+                                category: rule.category.clone().unwrap_or_else(|| "default".to_string()),
                                 auto_fixable: self.is_auto_fixable(rule),
                                 suggested_fix: self.generate_suggested_fix(rule, line),
                                 created_at: chrono::Utc::now().to_rfc3339(),
@@ -275,7 +275,7 @@ impl RuleEngine {
                             column_number: None,
                             message: format!("{}: {}", rule.title, rule.description),
                             severity: rule.severity.clone(),
-                            category: rule.category.clone(),
+                            category: rule.category.clone().unwrap_or_else(|| "default".to_string()),
                             auto_fixable: self.is_auto_fixable(rule),
                             suggested_fix: Some(rule.remediation.clone()),
                             created_at: chrono::Utc::now().to_rfc3339(),
@@ -295,7 +295,7 @@ impl RuleEngine {
                             column_number: None,
                             message: format!("{}: {}", rule.title, rule.description),
                             severity: rule.severity.clone(),
-                            category: rule.category.clone(),
+                            category: rule.category.clone().unwrap_or_else(|| "default".to_string()),
                             auto_fixable: self.is_auto_fixable(rule),
                             suggested_fix: Some(rule.remediation.clone()),
                             created_at: chrono::Utc::now().to_rfc3339(),
@@ -419,7 +419,7 @@ mod tests {
         let mut engine = RuleEngine::new();
         let rule = Rule {
             id: "TEST-001".to_string(),
-            category: "Security".to_string(),
+            category: Some("Security".to_string()),
             severity: "High".to_string(),
             title: "Test Rule".to_string(),
             description: "A test rule".to_string(),

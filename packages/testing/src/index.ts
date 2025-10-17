@@ -2,8 +2,8 @@
  * @snps/testing - Synapse Framework Testing - TDD enforcement with 100% coverage requirement
  */
 
-export class SynapseTesting {
-  public readonly name = 'SynapseTesting';
+export class SynapseTestingFramework {
+  public readonly name = 'SynapseTestingFramework';
   public readonly version = '0.1.0';
 
   constructor() {
@@ -23,5 +23,8 @@ export class SynapseTesting {
   }
 }
 
+// Backward compatibility alias
+export const SynapseTesting = SynapseTestingFramework;
+
 // Default export
-export default SynapseTesting;
+export default SynapseTestingFramework;

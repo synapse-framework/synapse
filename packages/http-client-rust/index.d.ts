@@ -17,7 +17,13 @@ export interface HttpRequestConfig {
   params?: Record<string, string>
 }
 export declare class HttpClient {
+  baseUrl?: string
+  defaultHeaders: Record<string, string>
+  timeout: number
   constructor(baseUrl?: string | undefined | null)
+  getBaseUrl(): string | null
+  getTimeout(): number
+  getDefaultHeaders(): Record<string, string>
   request(url: string, config?: HttpRequestConfig | undefined | null): Promise<HttpResponse>
   get(url: string, config?: HttpRequestConfig | undefined | null): Promise<HttpResponse>
   post(url: string, data?: any | undefined | null, config?: HttpRequestConfig | undefined | null): Promise<HttpResponse>

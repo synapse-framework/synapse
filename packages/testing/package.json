@@ -1,6 +1,6 @@
 {
   "name": "@snps/testing",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Synapse Framework Testing - TDD enforcement with 100% coverage requirement",
   "type": "module",
   "main": "dist/index.js",

@@ -1,10 +1,11 @@
 {
   "name": "@snps/env-parser-rust",
-  "version": "0.1.0",
+  "version": "0.2.2",
   "description": "Zero-dependency high-performance environment parser built with Rust - 10x faster than dotenv",
-  "type": "module",
   "main": "index.js",
+  "module": "index.mjs",
   "types": "index.d.ts",
+  "type": "module",
   "napi": {
     "name": "snps-env-parser-rust",
     "triples": {
@@ -49,6 +50,7 @@
   },
   "files": [
     "index.js",
+    "index.mjs",
     "index.d.ts",
     "README.md",
     "LICENSE"
@@ -69,12 +71,12 @@
     "@napi-rs/cli": "^2.18.0"
   },
   "optionalDependencies": {
-    "@snps/env-parser-rust-win32-x64-msvc": "0.1.0",
-    "@snps/env-parser-rust-darwin-x64": "0.1.0",
-    "@snps/env-parser-rust-linux-x64-gnu": "0.1.0",
-    "@snps/env-parser-rust-linux-x64-musl": "0.1.0",
-    "@snps/env-parser-rust-linux-arm64-gnu": "0.1.0",
-    "@snps/env-parser-rust-darwin-arm64": "0.1.0",
-    "@snps/env-parser-rust-linux-arm-gnueabihf": "0.1.0"
+    "@snps/env-parser-rust-win32-x64-msvc": "0.2.2",
+    "@snps/env-parser-rust-darwin-x64": "0.2.2",
+    "@snps/env-parser-rust-linux-x64-gnu": "0.2.2",
+    "@snps/env-parser-rust-linux-x64-musl": "0.2.2",
+    "@snps/env-parser-rust-linux-arm64-gnu": "0.2.2",
+    "@snps/env-parser-rust-darwin-arm64": "0.2.2",
+    "@snps/env-parser-rust-linux-arm-gnueabihf": "0.2.2"
   }
 }

@@ -2,8 +2,8 @@
  * @snps/state - Synapse Framework State Management - Reactive state management with validation
  */
 
-export class SynapseState {
-  public readonly name = 'SynapseState';
+export class SynapseStateManager {
+  public readonly name = 'SynapseStateManager';
   public readonly version = '0.1.0';
 
   constructor() {
@@ -23,5 +23,8 @@ export class SynapseState {
   }
 }
 
+// Backward compatibility alias
+export const SynapseState = SynapseStateManager;
+
 // Default export
-export default SynapseState;
+export default SynapseStateManager;

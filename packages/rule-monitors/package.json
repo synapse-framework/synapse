@@ -1,6 +1,6 @@
 {
   "name": "@snps/rule-monitors",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Intelligent rule monitors for automated best practices monitoring - Zero dependencies with Node.js built-ins only",
   "type": "module",
   "main": "dist/index.js",
@@ -57,6 +57,6 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@snps/rule-engine-rust": "^0.1.0"
+    "@snps/rule-engine-rust": "^0.1.1"
   }
 }

@@ -224,32 +224,17 @@ switch (platform) {
         }
         break
       case 'arm':
-        if (isMusl()) {
-          localFileExisted = existsSync(
-            join(__dirname, 'snps-env-parser-rust.linux-arm-musleabihf.node')
-          )
-          try {
-            if (localFileExisted) {
-              nativeBinding = require('./snps-env-parser-rust.linux-arm-musleabihf.node')
-            } else {
-              nativeBinding = require('@snps/env-parser-rust-linux-arm-musleabihf')
-            }
-          } catch (e) {
-            loadError = e
+        localFileExisted = existsSync(
+          join(__dirname, 'snps-env-parser-rust.linux-arm-gnueabihf.node')
+        )
+        try {
+          if (localFileExisted) {
+            nativeBinding = require('./snps-env-parser-rust.linux-arm-gnueabihf.node')
+          } else {
+            nativeBinding = require('@snps/env-parser-rust-linux-arm-gnueabihf')
           }
-        } else {
-          localFileExisted = existsSync(
-            join(__dirname, 'snps-env-parser-rust.linux-arm-gnueabihf.node')
-          )
-          try {
-            if (localFileExisted) {
-              nativeBinding = require('./snps-env-parser-rust.linux-arm-gnueabihf.node')
-            } else {
-              nativeBinding = require('@snps/env-parser-rust-linux-arm-gnueabihf')
-            }
-          } catch (e) {
-            loadError = e
-          }
+        } catch (e) {
+          loadError = e
         }
         break
       case 'riscv64':

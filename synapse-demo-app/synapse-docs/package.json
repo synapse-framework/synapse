@@ -1,0 +1,47 @@
+{
+  "name": "synapse-docs",
+  "version": "1.0.0",
+  "description": "Comprehensive documentation website for the Synapse Framework",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "dev": "synapse dev",
+    "build": "synapse build",
+    "test": "synapse test",
+    "lint": "synapse lint",
+    "start": "node dist/index.js",
+    "serve": "python3 -m http.server 8080 --directory public",
+    "build:docs": "npm run build && npm run copy:assets",
+    "copy:assets": "cp -r public/* dist/",
+    "deploy": "npm run build:docs && gh-pages -d dist"
+  },
+  "keywords": [
+    "synapse",
+    "framework",
+    "documentation",
+    "typescript",
+    "rust",
+    "web-app",
+    "docs"
+  ],
+  "author": "Synapse Framework Team",
+  "license": "MIT",
+  "dependencies": {
+    "@snps/core": "^0.3.0",
+    "@snps/env-parser-rust": "^0.2.0",
+    "@snps/http-client-rust": "^0.2.0",
+    "@snps/rule-engine-rust": "^0.2.0"
+  },
+  "devDependencies": {
+    "@snps/cli": "^0.3.0",
+    "gh-pages": "^6.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/synapse-framework/synapse-docs"
+  },
+  "homepage": "https://synapse-framework.github.io/synapse-docs"
+}

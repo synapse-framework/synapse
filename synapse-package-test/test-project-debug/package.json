@@ -1,0 +1,15 @@
+{
+  "name": "test-project-debug",
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "synapse dev",
+    "build": "synapse build",
+    "test": "synapse test",
+    "lint": "synapse lint",
+    "format": "synapse format"
+  },
+  "dependencies": {
+    "@snps/core": "^0.1.0"
+  }
+}

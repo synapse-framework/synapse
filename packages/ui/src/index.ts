@@ -1,39 +1,9 @@
-// Simple UI Library Export
-export interface ButtonProps {
-  children?: string;
-  variant?: 'primary' | 'secondary' | 'tertiary';
-  size?: 'sm' | 'md' | 'lg';
-  disabled?: boolean;
-  onClick?: () => void;
-  className?: string;
-}
+// Comprehensive UI Library Export
+export * from './components/index.js';
+export * from './utils/index.js';
 
-export interface InputProps {
-  value?: string;
-  placeholder?: string;
-  onChange?: (value: string) => void;
-  disabled?: boolean;
-  className?: string;
-}
-
-export interface CardProps {
-  children?: string;
-  title?: string;
-  className?: string;
-}
-
-// Theme system
-export interface Theme {
-  name: string;
-  colors: {
-    primary: string;
-    secondary: string;
-    background: string;
-    text: string;
-  };
-}
-
-export const lightTheme: Theme = {
+// Re-export themes for convenience
+export const lightTheme = {
   name: 'light',
   colors: {
     primary: '#3b82f6',
@@ -43,7 +13,7 @@ export const lightTheme: Theme = {
   }
 };
 
-export const darkTheme: Theme = {
+export const darkTheme = {
   name: 'dark',
   colors: {
     primary: '#60a5fa',
@@ -52,8 +22,3 @@ export const darkTheme: Theme = {
     text: '#f9fafb'
   }
 };
-
-// Utility functions
-export function cn(...classes: (string | undefined | null | false)[]): string {
-  return classes.filter(Boolean).join(' ');
-}

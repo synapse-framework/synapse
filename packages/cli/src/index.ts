@@ -148,7 +148,7 @@ export class SynapseCLI {
     }
   }
 
-  private async initProject(projectName?: string): Promise<void> {
+  public async initProject(projectName?: string): Promise<void> {
     if (!projectName) {
       console.error('❌ Project name is required. Usage: synapse init <project-name>');
       process.exit(1);
@@ -347,14 +347,143 @@ synapse lint
   private async buildProject(): Promise<void> {
     console.log('🔨 Building project...');
     
-    // Simulate build process
-    console.log('🔨 Compiler initialized');
-    console.log('✅ Compilation completed');
-    console.log('🔍 Linting System initialized');
-    console.log('✅ Linting completed');
+    try {
+      // Ensure dist directory exists
+      const distDir = join(process.cwd(), 'dist');
+      await fs.mkdir(distDir, { recursive: true });
+      
+      // Find TypeScript files
+      const srcDir = join(process.cwd(), 'src');
+      const tsFiles = await this.findTypeScriptFiles(srcDir);
+      
+      if (tsFiles.length === 0) {
+        console.log('⚠️ No TypeScript files found in src/');
+        return;
+      }
+      
+      console.log(`📄 Found ${tsFiles.length} TypeScript files`);
+      
+      // Compile each TypeScript file
+      for (const file of tsFiles) {
+        await this.compileTypeScriptFile(file);
+      }
+      
+      // Copy public files
+      await this.copyPublicFiles();
+      
+      console.log('✅ Build completed successfully');
+      console.log('📁 Output directory: dist/');
+    } catch (error) {
+      console.error('❌ Build failed:', error.message);
+      throw error;
+    }
+  }
 
-    console.log('✅ Build completed successfully');
-    console.log('📁 Output directory: dist/');
+  private async findTypeScriptFiles(dir: string): Promise<string[]> {
+    const files: string[] = [];
+    
+    try {
+      const entries = await fs.readdir(dir, { withFileTypes: true });
+      
+      for (const entry of entries) {
+        const fullPath = join(dir, entry.name);
+        
+        if (entry.isDirectory()) {
+          const subFiles = await this.findTypeScriptFiles(fullPath);
+          files.push(...subFiles);
+        } else if (entry.isFile() && (entry.name.endsWith('.ts') || entry.name.endsWith('.tsx'))) {
+          files.push(fullPath);
+        }
+      }
+    } catch (error) {
+      // Directory doesn't exist, return empty array
+    }
+    
+    return files;
+  }
+
+  private async compileTypeScriptFile(filePath: string): Promise<void> {
+    const relativePath = filePath.replace(process.cwd() + '/src/', '');
+    const outputPath = join(process.cwd(), 'dist', relativePath.replace(/\.(ts|tsx)$/, '.js'));
+    
+    // Ensure output directory exists
+    const outputDir = dirname(outputPath);
+    await fs.mkdir(outputDir, { recursive: true });
+    
+    try {
+      // Read the TypeScript file
+      const content = await fs.readFile(filePath, 'utf-8');
+      
+      // Simple TypeScript to JavaScript conversion
+      // In a real implementation, this would use the TypeScript compiler API
+      let jsContent = content
+        .replace(/import\s+type\s+.*?from\s+['"][^'"]+['"];?\s*/g, '') // Remove type imports
+        .replace(/:\s*[A-Za-z][A-Za-z0-9]*(\[\])?/g, '') // Remove type annotations
+        .replace(/as\s+[A-Za-z][A-Za-z0-9]*/g, '') // Remove type assertions
+        .replace(/<[A-Za-z][A-Za-z0-9]*>/g, '') // Remove generic type parameters
+        .replace(/export\s+interface\s+.*?\{[\s\S]*?\}/g, '') // Remove interfaces
+        .replace(/export\s+type\s+.*?=.*?;/g, '') // Remove type aliases
+        .replace(/private\s+/g, '') // Remove private keywords
+        .replace(/public\s+/g, '') // Remove public keywords
+        .replace(/protected\s+/g, '') // Remove protected keywords
+        .replace(/readonly\s+/g, '') // Remove readonly keywords
+        .replace(/async\s+function/g, 'async function') // Fix async function spacing
+        .replace(/async\s+\(/g, 'async (') // Fix async arrow functions
+        .replace(/\?\?\s*=/g, '||=') // Replace nullish coalescing assignment
+        .replace(/\?\?/g, '||') // Replace nullish coalescing
+        .replace(/\.tsx?$/g, '.js'); // Update file extensions in imports
+      
+      // Add basic module wrapper
+      jsContent = `// Compiled from ${relativePath}\n${jsContent}`;
+      
+      // Write the compiled JavaScript file
+      await fs.writeFile(outputPath, jsContent, 'utf-8');
+      
+      console.log(`✅ Compiled: ${relativePath} → ${relativePath.replace(/\.(ts|tsx)$/, '.js')}`);
+    } catch (error) {
+      console.error(`❌ Failed to compile ${relativePath}:`, error.message);
+      throw error;
+    }
+  }
+
+  private async copyPublicFiles(): Promise<void> {
+    const publicDir = join(process.cwd(), 'public');
+    const distDir = join(process.cwd(), 'dist');
+    
+    try {
+      const entries = await fs.readdir(publicDir, { withFileTypes: true });
+      
+      for (const entry of entries) {
+        const srcPath = join(publicDir, entry.name);
+        const destPath = join(distDir, entry.name);
+        
+        if (entry.isDirectory()) {
+          await this.copyDirectory(srcPath, destPath);
+        } else {
+          await fs.copyFile(srcPath, destPath);
+        }
+      }
+      
+      console.log('📁 Copied public files to dist/');
+    } catch (error) {
+      // Public directory doesn't exist, that's okay
+    }
+  }
+
+  private async copyDirectory(src: string, dest: string): Promise<void> {
+    await fs.mkdir(dest, { recursive: true });
+    const entries = await fs.readdir(src, { withFileTypes: true });
+    
+    for (const entry of entries) {
+      const srcPath = join(src, entry.name);
+      const destPath = join(dest, entry.name);
+      
+      if (entry.isDirectory()) {
+        await this.copyDirectory(srcPath, destPath);
+      } else {
+        await fs.copyFile(srcPath, destPath);
+      }
+    }
   }
 
   private async runTests(): Promise<void> {

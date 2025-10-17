@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Synapse Framework - Full-Featured Demo</title>
+    <meta name="description" content="A comprehensive demonstration of the Synapse framework capabilities, showcasing real-world web application development with TypeScript, Rust integration, and modern UI components.">
+    <meta name="keywords" content="synapse, framework, typescript, rust, demo, dashboard, web-app, fullstack">
+    <meta name="author" content="Synapse Framework Team">
+    
+    <!-- Open Graph Meta Tags -->
+    <meta property="og:title" content="Synapse Framework - Full-Featured Demo">
+    <meta property="og:description" content="A comprehensive demonstration of the Synapse framework capabilities">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://synapse-framework.github.io/synapse-dashboard-demo">
+    <meta property="og:image" content="https://synapse-framework.github.io/synapse-dashboard-demo/assets/synapse-logo.png">
+    
+    <!-- Twitter Card Meta Tags -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Synapse Framework - Full-Featured Demo">
+    <meta name="twitter:description" content="A comprehensive demonstration of the Synapse framework capabilities">
+    <meta name="twitter:image" content="https://synapse-framework.github.io/synapse-dashboard-demo/assets/synapse-logo.png">
+    
+    <style>
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #667eea;
+            --secondary-color: #764ba2;
+            --accent-color: #f093fb;
+            --text-color: #2d3748;
+            --text-light: #718096;
+            --bg-color: #ffffff;
+            --bg-light: #f7fafc;
+            --border-color: #e2e8f0;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 25px rgba(0, 0, 0, 0.15);
+            --border-radius: 8px;
+            --transition: all 0.3s ease;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            min-height: 100vh;
+        }
+
+        /* Header */
+        .header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--border-color);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-color);
+            text-decoration: none;
+            font-weight: 500;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Main content */
+        .main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        /* Hero section */
+        .hero {
+            text-align: center;
+            padding: 4rem 0;
+            color: white;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            margin-bottom: 2rem;
+            opacity: 0.9;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: var(--border-radius);
+            font-size: 1rem;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .btn-primary {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.2);
+            color: white;
+            border: 2px solid white;
+        }
+
+        .btn-secondary:hover {
+            background: white;
+            color: var(--primary-color);
+        }
+
+        /* Features section */
+        .features {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .features h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-card {
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            transition: var(--transition);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .feature-card p {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+        }
+
+        .feature-list li {
+            padding: 0.5rem 0;
+            color: var(--text-light);
+        }
+
+        .feature-list li::before {
+            content: "✅ ";
+            margin-right: 0.5rem;
+        }
+
+        /* Demo section */
+        .demo {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .demo h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+            color: var(--text-color);
+        }
+
+        .demo-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        .demo-text h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-color);
+        }
+
+        .demo-text p {
+            color: var(--text-light);
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-preview {
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            border: 2px dashed var(--border-color);
+        }
+
+        .demo-preview h4 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .demo-preview p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        /* Code examples */
+        .code-examples {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .code-examples h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .code-tabs {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .code-tab {
+            padding: 1rem 2rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            color: var(--text-light);
+            border-bottom: 2px solid transparent;
+            transition: var(--transition);
+        }
+
+        .code-tab.active {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        .code-block {
+            background: #1a202c;
+            color: #e2e8f0;
+            padding: 2rem;
+            border-radius: var(--border-radius);
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #68d391;
+        }
+
+        .code-block .keyword {
+            color: #f687b3;
+        }
+
+        .code-block .string {
+            color: #fbb6ce;
+        }
+
+        .code-block .function {
+            color: #90cdf4;
+        }
+
+        /* Stats section */
+        .stats {
+            background: white;
+            border-radius: 16px;
+            padding: 3rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow-lg);
+        }
+
+        .stats h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: var(--text-color);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .stat-item {
+            text-align: center;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: var(--border-radius);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        /* Footer */
+        .footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-top: 1px solid var(--border-color);
+            padding: 3rem 0;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .footer h3 {
+            color: var(--text-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer p {
+            color: var(--text-light);
+            margin-bottom: 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .nav {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                gap: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .main {
+                padding: 1rem;
+            }
+
+            .hero {
+                padding: 2rem 0;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features, .demo, .code-examples, .stats {
+                padding: 2rem 1rem;
+            }
+
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-in-up {
+            animation: fadeInUp 0.6s ease-out;
+        }
+
+        /* Scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <a href="#" class="logo">🚀 Synapse Framework</a>
+            <ul class="nav-links">
+                <li><a href="#features">Features</a></li>
+                <li><a href="#demo">Demo</a></li>
+                <li><a href="#code">Code</a></li>
+                <li><a href="#stats">Stats</a></li>
+                <li><a href="https://github.com/synapse-framework/synapse-dashboard-demo" target="_blank">GitHub</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Main content -->
+    <main class="main">
+        <!-- Hero section -->
+        <section class="hero fade-in-up">
+            <h1>Synapse Framework</h1>
+            <p>A comprehensive demonstration of modern web application development with TypeScript, Rust integration, and cutting-edge UI components.</p>
+            <div class="cta-buttons">
+                <a href="#demo" class="btn btn-primary">View Live Demo</a>
+                <a href="https://github.com/synapse-framework/synapse-dashboard-demo" class="btn btn-secondary" target="_blank">View Source Code</a>
+            </div>
+        </section>
+
+        <!-- Features section -->
+        <section id="features" class="features">
+            <h2>✨ Framework Features</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">🏗️</div>
+                    <h3>Core Framework</h3>
+                    <p>Comprehensive TypeScript-first framework with zero dependencies</p>
+                    <ul class="feature-list">
+                        <li>Multi-threaded Runtime Engine</li>
+                        <li>High-performance Compiler</li>
+                        <li>Testing Framework with TDD enforcement</li>
+                        <li>Advanced Linting System</li>
+                        <li>Universal Router</li>
+                        <li>Reactive State Management</li>
+                        <li>Extensible Plugin System</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>UI Components</h3>
+                    <p>Modern, responsive UI component library with animations</p>
+                    <ul class="feature-list">
+                        <li>Interactive Dashboard Components</li>
+                        <li>Theme Support (Dark/Light)</li>
+                        <li>Mobile-Responsive Design</li>
+                        <li>Accessibility Features</li>
+                        <li>Smooth Animations</li>
+                        <li>Customizable Styling</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🦀</div>
+                    <h3>Rust Integration</h3>
+                    <p>High-performance Rust packages seamlessly integrated</p>
+                    <ul class="feature-list">
+                        <li>Environment Variable Parser</li>
+                        <li>High-performance HTTP Client</li>
+                        <li>Business Logic Rule Engine</li>
+                        <li>Memory-safe Operations</li>
+                        <li>NAPI Bindings</li>
+                        <li>Zero-copy Data Transfer</li>
+                    </ul>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Dashboard Features</h3>
+                    <p>Real-world application showcasing framework capabilities</p>
+                    <ul class="feature-list">
+                        <li>Real-time Performance Metrics</li>
+                        <li>Security Center with Vulnerability Scanning</li>
+                        <li>AI Code Optimizer with Suggestions</li>
+                        <li>Settings Management</li>
+                        <li>Interactive Navigation</li>
+                        <li>Single-page Application</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo section -->
+        <section id="demo" class="demo">
+            <h2>🎯 Live Demo</h2>
+            <div class="demo-content">
+                <div class="demo-text">
+                    <h3>Experience the Power</h3>
+                    <p>Our comprehensive dashboard demonstrates all the framework's capabilities in a real-world application. From performance monitoring to AI-powered code optimization, see how Synapse makes modern web development effortless.</p>
+                    <p>Key highlights include real-time metrics, security scanning, intelligent code suggestions, and a fully responsive interface that works perfectly on all devices.</p>
+                    <div class="cta-buttons">
+                        <a href="../synapse-dashboard/public/index.html" class="btn btn-primary" target="_blank">Launch Demo App</a>
+                        <a href="https://github.com/synapse-framework/synapse-dashboard-demo" class="btn btn-secondary" target="_blank">View Source</a>
+                    </div>
+                </div>
+                <div class="demo-preview">
+                    <h4>🚀 Synapse Dashboard</h4>
+                    <p>Interactive demo showcasing:</p>
+                    <ul style="text-align: left; margin-top: 1rem;">
+                        <li>Real-time Performance Metrics</li>
+                        <li>Security Status Monitoring</li>
+                        <li>AI Code Optimization</li>
+                        <li>Settings Management</li>
+                        <li>Responsive Design</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Code examples -->
+        <section id="code" class="code-examples">
+            <h2>💻 Code Examples</h2>
+            <div class="code-tabs">
+                <button class="code-tab active" onclick="showCode('typescript')">TypeScript</button>
+                <button class="code-tab" onclick="showCode('rust')">Rust</button>
+                <button class="code-tab" onclick="showCode('html')">HTML/CSS</button>
+            </div>
+            
+            <div id="typescript-code" class="code-block">
+<span class="comment">// Main Dashboard Application</span>
+<span class="keyword">import</span> { SynapseRuntime } <span class="keyword">from</span> <span class="string">'@snps/core'</span>;
+<span class="keyword">import</span> { HttpClient } <span class="keyword">from</span> <span class="string">'@snps/http-client-rust'</span>;
+
+<span class="keyword">class</span> <span class="function">SynapseDashboard</span> {
+  <span class="keyword">private</span> runtime: SynapseRuntime;
+  <span class="keyword">private</span> httpClient: HttpClient;
+
+  <span class="keyword">constructor</span>() {
+    <span class="keyword">this</span>.runtime = <span class="keyword">new</span> <span class="function">SynapseRuntime</span>();
+    <span class="keyword">this</span>.httpClient = <span class="keyword">new</span> <span class="function">HttpClient</span>();
+  }
+
+  <span class="keyword">public async</span> <span class="function">initialize</span>(): Promise&lt;<span class="keyword">void</span>&gt; {
+    <span class="keyword">await</span> <span class="keyword">this</span>.runtime.<span class="function">start</span>();
+    <span class="keyword">await</span> <span class="keyword">this</span>.<span class="function">loadInitialData</span>();
+  }
+
+  <span class="keyword">private async</span> <span class="function">loadInitialData</span>(): Promise&lt;<span class="keyword">void</span>&gt; {
+    <span class="keyword">const</span> metrics = <span class="keyword">await</span> <span class="keyword">this</span>.<span class="function">loadMetrics</span>();
+    <span class="keyword">this</span>.state.<span class="function">setState</span>(<span class="string">'metrics'</span>, metrics);
+  }
+}
+            </div>
+
+            <div id="rust-code" class="code-block" style="display: none;">
+<span class="comment">// Rust HTTP Client Implementation</span>
+<span class="keyword">use</span> reqwest;
+<span class="keyword">use</span> serde_json;
+
+<span class="keyword">pub struct</span> <span class="function">HttpClient</span> {
+    client: reqwest::Client,
+}
+
+<span class="keyword">impl</span> <span class="function">HttpClient</span> {
+    <span class="keyword">pub fn</span> <span class="function">new</span>() -&gt; <span class="keyword">Self</span> {
+        <span class="keyword">Self</span> {
+            client: reqwest::Client::<span class="function">new</span>(),
+        }
+    }
+
+    <span class="keyword">pub async fn</span> <span class="function">get</span>(&amp;<span class="keyword">self</span>, url: &amp;<span class="keyword">str</span>) -&gt; Result&lt;String, reqwest::Error&gt; {
+        <span class="keyword">let</span> response = <span class="keyword">self</span>.client.<span class="function">get</span>(url).<span class="function">send</span>().<span class="keyword">await</span>?;
+        <span class="keyword">let</span> body = response.<span class="function">text</span>().<span class="keyword">await</span>?;
+        <span class="keyword">Ok</span>(body)
+    }
+}
+            </div>
+
+            <div id="html-code" class="code-block" style="display: none;">
+<span class="comment">&lt;!-- Modern HTML with CSS Grid --&gt;</span>
+&lt;<span class="keyword">div</span> <span class="string">class</span>=<span class="string">"dashboard-container"</span>&gt;
+  &lt;<span class="keyword">div</span> <span class="string">class</span>=<span class="string">"dashboard-header"</span>&gt;
+    &lt;<span class="keyword">h1</span>&gt;🚀 Synapse Dashboard&lt;/<span class="keyword">h1</span>&gt;
+  &lt;/<span class="keyword">div</span>&gt;
+  
+  &lt;<span class="keyword">div</span> <span class="string">class</span>=<span class="string">"dashboard-grid"</span>&gt;
+    &lt;<span class="keyword">div</span> <span class="string">class</span>=<span class="string">"dashboard-card"</span>&gt;
+      &lt;<span class="keyword">h3</span>&gt;📊 Performance&lt;/<span class="keyword">h3</span>&gt;
+      &lt;<span class="keyword">div</span> <span class="string">class</span>=<span class="string">"metric-value"</span>&gt;95%&lt;/<span class="keyword">div</span>&gt;
+    &lt;/<span class="keyword">div</span>&gt;
+  &lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+
+<span class="comment">/* CSS Grid Layout */</span>
+.<span class="function">dashboard-grid</span> {
+  <span class="keyword">display</span>: <span class="string">grid</span>;
+  <span class="keyword">grid-template-columns</span>: <span class="function">repeat</span>(<span class="string">auto-fit</span>, <span class="function">minmax</span>(<span class="string">300px</span>, <span class="string">1fr</span>));
+  <span class="keyword">gap</span>: <span class="string">20px</span>;
+}
+            </div>
+        </section>
+
+        <!-- Stats section -->
+        <section id="stats" class="stats">
+            <h2>📈 Project Statistics</h2>
+            <div class="stats-grid">
+                <div class="stat-item">
+                    <div class="stat-number">95%</div>
+                    <div class="stat-label">Test Success Rate</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">0</div>
+                    <div class="stat-label">Dependencies</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">100%</div>
+                    <div class="stat-label">TypeScript Coverage</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">19</div>
+                    <div class="stat-label">Test Cases</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">7</div>
+                    <div class="stat-label">Core Components</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">3</div>
+                    <div class="stat-label">Rust Packages</div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <h3>🚀 Synapse Framework</h3>
+            <p>Built with ❤️ using modern web technologies and best practices</p>
+            <div class="footer-links">
+                <a href="https://github.com/synapse-framework" target="_blank">GitHub</a>
+                <a href="https://synapse-framework.github.io" target="_blank">Documentation</a>
+                <a href="https://github.com/synapse-framework/synapse-dashboard-demo/issues" target="_blank">Issues</a>
+                <a href="https://github.com/synapse-framework/synapse-dashboard-demo/discussions" target="_blank">Discussions</a>
+            </div>
+            <p>&copy; 2024 Synapse Framework Team. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Code tab switching
+        function showCode(language) {
+            // Hide all code blocks
+            document.querySelectorAll('.code-block').forEach(block => {
+                block.style.display = 'none';
+            });
+            
+            // Remove active class from all tabs
+            document.querySelectorAll('.code-tab').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Show selected code block
+            document.getElementById(language + '-code').style.display = 'block';
+            
+            // Add active class to selected tab
+            event.target.classList.add('active');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('fade-in-up');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

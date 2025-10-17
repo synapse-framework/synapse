@@ -50,6 +50,8 @@ impl CommitLinter {
         Self { rules }
     }
 
+
+
     #[napi]
     pub fn lint(&self, commit_message: String) -> LintResult {
         let lines: Vec<&str> = commit_message.lines().collect();
@@ -106,7 +108,11 @@ impl CommitRule for TypeEnumRule {
             "feat", "fix", "docs", "style", "refactor", "perf", "test", "build", "ci", "chore", "revert"
         ];
 
-        let re = Regex::new(r"^(\w+)(?:\(([^)]+)\))?:").unwrap();
+        let re = Regex::new(r"^(\w+)(?:\(([^)]+)\))?:\s").unwrap();
+        println!("Testing header: '{}'", header);
+        println!("Regex matches: {}", re.is_match(header));
+        println!("Testing header: '{}'", header);
+        println!("Regex matches: {}", re.is_match(header));
         if let Some(caps) = re.captures(header) {
             let commit_type = &caps[1];
             if !valid_types.contains(&commit_type) {
@@ -120,8 +126,9 @@ impl CommitRule for TypeEnumRule {
                 };
             }
         } else {
+            // This should trigger for "fix:" since it doesn't match the regex
             return RuleResult {
-                errors: vec!["Commit message must start with type:".to_string()],
+                errors: vec!["Commit message must start with type, followed by a colon and a space.".to_string()],
                 warnings: vec![],
             };
         }
@@ -157,9 +164,15 @@ impl CommitRule for ScopeEnumRule {
 
 impl CommitRule for SubjectLengthRule {
     fn validate(&self, header: &str, _body: &[String]) -> RuleResult {
-        let re = Regex::new(r"^[^:]+:\s*(.+)").unwrap();
+        let re = Regex::new(r"^[^:]+:\s*(.*)").unwrap();
         if let Some(caps) = re.captures(header) {
             let subject = &caps[1];
+            if subject.is_empty() {
+                return RuleResult {
+                    errors: vec!["Subject must not be empty".to_string()],
+                    warnings: vec![],
+                };
+            }
             if subject.len() < 10 {
                 return RuleResult {
                     errors: vec!["Subject must be at least 10 characters long".to_string()],

@@ -1,6 +1,6 @@
 {
   "name": "@snps/plugins",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Synapse Framework Plugin System - Extensible architecture with strict guidelines",
   "type": "module",
   "main": "dist/index.js",

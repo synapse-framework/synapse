@@ -7,7 +7,9 @@ use std::path::Path;
 use url::Url;
 
 #[napi]
-pub struct EnvParser;
+pub struct EnvParser {
+    env_vars: HashMap<String, String>,
+}
 
 #[napi]
 #[derive(Serialize, Deserialize)]
@@ -30,6 +32,79 @@ pub struct Validator {
 
 #[napi]
 impl EnvParser {
+    #[napi(constructor)]
+    pub fn new() -> Self {
+        Self {
+            env_vars: HashMap::new(),
+        }
+    }
+
+    #[napi]
+    pub unsafe fn load_from_file(&mut self, file_path: String) -> napi::Result<()> {
+        self.env_vars = Self::parse_file(&file_path);
+        Ok(())
+    }
+
+    #[napi]
+    pub fn load_from_string(&mut self, content: String) {
+        self.env_vars = Self::parse_content(&content);
+    }
+
+    #[napi]
+    pub fn get(&self, key: String, default_value: Option<String>) -> String {
+        self.env_vars.get(&key)
+            .cloned()
+            .or(default_value)
+            .unwrap_or_default()
+    }
+
+    #[napi]
+    pub fn get_number(&self, key: String, default_value: Option<f64>) -> f64 {
+        self.env_vars.get(&key)
+            .and_then(|v| v.parse::<f64>().ok())
+            .or(default_value)
+            .unwrap_or(0.0)
+    }
+
+    #[napi]
+    pub fn get_boolean(&self, key: String, default_value: Option<bool>) -> bool {
+        self.env_vars.get(&key)
+            .map(|v| match v.to_lowercase().as_str() {
+                "true" | "1" | "yes" | "on" => true,
+                "false" | "0" | "no" | "off" => false,
+                _ => false,
+            })
+            .or(default_value)
+            .unwrap_or(false)
+    }
+
+    #[napi]
+    pub fn get_array(&self, key: String, separator: Option<String>) -> Vec<String> {
+        let sep = separator.unwrap_or_else(|| ",".to_string());
+        self.env_vars.get(&key)
+            .map(|v| v.split(&sep).map(|s| s.trim().to_string()).collect())
+            .unwrap_or_default()
+    }
+
+    #[napi]
+    pub fn has(&self, key: String) -> bool {
+        self.env_vars.contains_key(&key)
+    }
+
+    #[napi]
+    pub fn all(&self) -> HashMap<String, String> {
+        self.env_vars.clone()
+    }
+
+    #[napi]
+    pub fn validate(&self, schema: serde_json::Value) -> ValidationResult {
+        // Parse the schema from JSON
+        let schema_map: HashMap<String, Validator> = serde_json::from_value(schema)
+            .unwrap_or_else(|_| HashMap::new());
+        Self::validate_schema(&schema_map, &self.env_vars)
+    }
+
+    // Static methods for backward compatibility
     #[napi]
     pub fn load(path: Option<String>) -> HashMap<String, String> {
         let env_path = path.unwrap_or_else(|| ".env".to_string());
@@ -41,12 +116,10 @@ impl EnvParser {
         Self::parse_content(&content)
     }
 
+    // Factory function to create new instance
     #[napi]
-    pub fn validate(schema: serde_json::Value) -> ValidationResult {
-        // Parse the schema from JSON
-        let schema_map: HashMap<String, Validator> = serde_json::from_value(schema)
-            .unwrap_or_else(|_| HashMap::new());
-        Self::validate_schema(&schema_map)
+    pub fn create() -> Self {
+        Self::new()
     }
 
     fn parse_file(path: &str) -> HashMap<String, String> {
@@ -126,12 +199,12 @@ impl EnvParser {
         result
     }
 
-    fn validate_schema(schema: &HashMap<String, Validator>) -> ValidationResult {
+    fn validate_schema(schema: &HashMap<String, Validator>, env_vars: &HashMap<String, String>) -> ValidationResult {
         let mut errors = Vec::new();
         let mut data = HashMap::new();
 
         for (key, validator) in schema {
-            let value = std::env::var(key).ok();
+            let value = env_vars.get(key).cloned();
 
             if validator.required.unwrap_or(false) && value.is_none() {
                 errors.push(format!("Required environment variable '{}' is missing", key));
@@ -284,8 +357,9 @@ MULTILINE="line1\nline2"
             pattern: None,
         });
         
-        std::env::set_var("PORT", "8080");
-        let result = EnvParser::validate(schema);
+        let mut env_vars = HashMap::new();
+        env_vars.insert("PORT".to_string(), "8080".to_string());
+        let result = EnvParser::validate_schema(&schema, &env_vars);
         assert!(result.valid);
         assert_eq!(result.data.get("PORT").unwrap().as_f64().unwrap(), 8080.0);
     }

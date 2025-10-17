@@ -1,8 +1,7 @@
 {
   "name": "@snps/rule-engine-rust",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Intelligent rule engine for automated best practices monitoring and enforcement - Built with Rust for maximum performance",
-  "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
   "bin": {
@@ -74,12 +73,12 @@
     "@napi-rs/cli": "^2.18.0"
   },
   "optionalDependencies": {
-    "@snps/rule-engine-rust-win32-x64-msvc": "0.1.0",
-    "@snps/rule-engine-rust-darwin-x64": "0.1.0",
-    "@snps/rule-engine-rust-linux-x64-gnu": "0.1.0",
-    "@snps/rule-engine-rust-linux-x64-musl": "0.1.0",
-    "@snps/rule-engine-rust-linux-arm64-gnu": "0.1.0",
-    "@snps/rule-engine-rust-darwin-arm64": "0.1.0",
-    "@snps/rule-engine-rust-linux-arm-gnueabihf": "0.1.0"
+    "@snps/rule-engine-rust-win32-x64-msvc": "0.2.1",
+    "@snps/rule-engine-rust-darwin-x64": "0.2.1",
+    "@snps/rule-engine-rust-linux-x64-gnu": "0.2.1",
+    "@snps/rule-engine-rust-linux-x64-musl": "0.2.1",
+    "@snps/rule-engine-rust-linux-arm64-gnu": "0.2.1",
+    "@snps/rule-engine-rust-darwin-arm64": "0.2.1",
+    "@snps/rule-engine-rust-linux-arm-gnueabihf": "0.2.1"
   }
 }

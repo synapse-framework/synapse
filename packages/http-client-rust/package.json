@@ -1,8 +1,7 @@
 {
   "name": "@snps/http-client-rust",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Zero-dependency high-performance HTTP client built with Rust - Blazing fast with 10x performance improvement",
-  "type": "module",
   "main": "index.js",
   "types": "index.d.ts",
   "napi": {
@@ -67,12 +66,12 @@
     "@napi-rs/cli": "^2.18.0"
   },
   "optionalDependencies": {
-    "@snps/http-client-rust-win32-x64-msvc": "0.1.0",
-    "@snps/http-client-rust-darwin-x64": "0.1.0",
-    "@snps/http-client-rust-linux-x64-gnu": "0.1.0",
-    "@snps/http-client-rust-linux-x64-musl": "0.1.0",
-    "@snps/http-client-rust-linux-arm64-gnu": "0.1.0",
-    "@snps/http-client-rust-darwin-arm64": "0.1.0",
-    "@snps/http-client-rust-linux-arm-gnueabihf": "0.1.0"
+    "@snps/http-client-rust-win32-x64-msvc": "0.2.1",
+    "@snps/http-client-rust-darwin-x64": "0.2.1",
+    "@snps/http-client-rust-linux-x64-gnu": "0.2.1",
+    "@snps/http-client-rust-linux-x64-musl": "0.2.1",
+    "@snps/http-client-rust-linux-arm64-gnu": "0.2.1",
+    "@snps/http-client-rust-darwin-arm64": "0.2.1",
+    "@snps/http-client-rust-linux-arm-gnueabihf": "0.2.1"
   }
 }

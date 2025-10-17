@@ -1,6 +1,6 @@
 {
   "name": "@snps/linting",
-  "version": "0.3.0",
+  "version": "0.3.1",
   "description": "Synapse Framework Linting - 92 strict rules for code quality and best practices",
   "type": "module",
   "main": "dist/index.js",

@@ -2,8 +2,8 @@
  * @snps/linting - Synapse Framework Linting - 92 strict rules for code quality and best practices
  */
 
-export class SynapseLinting {
-  public readonly name = 'SynapseLinting';
+export class SynapseLintingSystem {
+  public readonly name = 'SynapseLintingSystem';
   public readonly version = '0.1.0';
 
   constructor() {
@@ -23,5 +23,8 @@ export class SynapseLinting {
   }
 }
 
+// Backward compatibility alias
+export const SynapseLinting = SynapseLintingSystem;
+
 // Default export
-export default SynapseLinting;
+export default SynapseLintingSystem;
