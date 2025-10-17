@@ -1,0 +1,356 @@
+// Synapse Framework Documentation - Interactive Enhancements
+// Beautiful animations and interactions
+
+document.addEventListener('DOMContentLoaded', function() {
+  // Initialize all interactive features
+  initScrollAnimations();
+  initCopyButtons();
+  initSmoothScrolling();
+  initThemeToggle();
+  initParallaxEffects();
+  initTypingEffect();
+  initParticleBackground();
+});
+
+// Scroll-triggered animations
+function initScrollAnimations() {
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -50px 0px'
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, observerOptions);
+
+  // Observe all animated elements
+  document.querySelectorAll('.package-card, .feature, .ui-feature').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(30px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+}
+
+// Copy code functionality
+function initCopyButtons() {
+  document.querySelectorAll('.copy-btn, .copy-code').forEach(button => {
+    button.addEventListener('click', async function() {
+      const codeBlock = this.parentElement.querySelector('code');
+      const text = codeBlock.textContent;
+      
+      try {
+        await navigator.clipboard.writeText(text);
+        
+        // Visual feedback
+        const originalText = this.textContent;
+        this.textContent = 'Copied!';
+        this.style.background = 'var(--success-green)';
+        
+        setTimeout(() => {
+          this.textContent = originalText;
+          this.style.background = '';
+        }, 2000);
+      } catch (err) {
+        console.error('Failed to copy text: ', err);
+        // Fallback for older browsers
+        const textArea = document.createElement('textarea');
+        textArea.value = text;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        this.textContent = 'Copied!';
+        setTimeout(() => {
+          this.textContent = 'Copy Code';
+        }, 2000);
+      }
+    });
+  });
+}
+
+// Smooth scrolling for navigation links
+function initSmoothScrolling() {
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      e.preventDefault();
+      const target = document.querySelector(this.getAttribute('href'));
+      if (target) {
+        target.scrollIntoView({
+          behavior: 'smooth',
+          block: 'start'
+        });
+      }
+    });
+  });
+}
+
+// Theme toggle functionality
+function initThemeToggle() {
+  // Create theme toggle button
+  const themeToggle = document.createElement('button');
+  themeToggle.innerHTML = '🌙';
+  themeToggle.className = 'theme-toggle';
+  themeToggle.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    z-index: 1000;
+    background: var(--glass-bg);
+    backdrop-filter: var(--glass-backdrop);
+    border: 1px solid var(--glass-border);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    cursor: pointer;
+    font-size: 1.5rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-md);
+  `;
+  
+  document.body.appendChild(themeToggle);
+  
+  // Check for saved theme preference
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeToggle.innerHTML = '☀️';
+  }
+  
+  themeToggle.addEventListener('click', function() {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    this.innerHTML = isDark ? '☀️' : '🌙';
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+  });
+}
+
+// Parallax effects for hero section
+function initParallaxEffects() {
+  const hero = document.querySelector('.header');
+  if (!hero) return;
+  
+  window.addEventListener('scroll', () => {
+    const scrolled = window.pageYOffset;
+    const rate = scrolled * -0.5;
+    hero.style.transform = `translateY(${rate}px)`;
+  });
+}
+
+// Typing effect for hero title
+function initTypingEffect() {
+  const heroTitle = document.querySelector('.header h1');
+  if (!heroTitle) return;
+  
+  const text = heroTitle.textContent;
+  heroTitle.textContent = '';
+  heroTitle.style.borderRight = '2px solid var(--primary-blue)';
+  
+  let i = 0;
+  const typeWriter = () => {
+    if (i < text.length) {
+      heroTitle.textContent += text.charAt(i);
+      i++;
+      setTimeout(typeWriter, 100);
+    } else {
+      heroTitle.style.borderRight = 'none';
+    }
+  };
+  
+  // Start typing effect after a short delay
+  setTimeout(typeWriter, 1000);
+}
+
+// Particle background effect
+function initParticleBackground() {
+  const hero = document.querySelector('.header');
+  if (!hero) return;
+  
+  const canvas = document.createElement('canvas');
+  canvas.style.cssText = `
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    opacity: 0.3;
+  `;
+  hero.appendChild(canvas);
+  
+  const ctx = canvas.getContext('2d');
+  const particles = [];
+  
+  function resizeCanvas() {
+    canvas.width = hero.offsetWidth;
+    canvas.height = hero.offsetHeight;
+  }
+  
+  function createParticle() {
+    return {
+      x: Math.random() * canvas.width,
+      y: Math.random() * canvas.height,
+      vx: (Math.random() - 0.5) * 0.5,
+      vy: (Math.random() - 0.5) * 0.5,
+      size: Math.random() * 2 + 1,
+      opacity: Math.random() * 0.5 + 0.2
+    };
+  }
+  
+  function initParticles() {
+    for (let i = 0; i < 50; i++) {
+      particles.push(createParticle());
+    }
+  }
+  
+  function updateParticles() {
+    particles.forEach(particle => {
+      particle.x += particle.vx;
+      particle.y += particle.vy;
+      
+      if (particle.x < 0 || particle.x > canvas.width) particle.vx *= -1;
+      if (particle.y < 0 || particle.y > canvas.height) particle.vy *= -1;
+    });
+  }
+  
+  function drawParticles() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    particles.forEach(particle => {
+      ctx.beginPath();
+      ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+      ctx.fillStyle = `rgba(255, 255, 255, ${particle.opacity})`;
+      ctx.fill();
+    });
+  }
+  
+  function animate() {
+    updateParticles();
+    drawParticles();
+    requestAnimationFrame(animate);
+  }
+  
+  resizeCanvas();
+  initParticles();
+  animate();
+  
+  window.addEventListener('resize', resizeCanvas);
+}
+
+// Package card hover effects
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.package-card').forEach(card => {
+    card.addEventListener('mouseenter', function() {
+      this.style.transform = 'translateY(-8px) scale(1.02)';
+    });
+    
+    card.addEventListener('mouseleave', function() {
+      this.style.transform = 'translateY(0) scale(1)';
+    });
+  });
+});
+
+// Button ripple effect
+document.addEventListener('DOMContentLoaded', function() {
+  document.querySelectorAll('.btn, .nav-link').forEach(button => {
+    button.addEventListener('click', function(e) {
+      const ripple = document.createElement('span');
+      const rect = this.getBoundingClientRect();
+      const size = Math.max(rect.width, rect.height);
+      const x = e.clientX - rect.left - size / 2;
+      const y = e.clientY - rect.top - size / 2;
+      
+      ripple.style.cssText = `
+        position: absolute;
+        width: ${size}px;
+        height: ${size}px;
+        left: ${x}px;
+        top: ${y}px;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: 50%;
+        transform: scale(0);
+        animation: ripple 0.6s linear;
+        pointer-events: none;
+      `;
+      
+      this.style.position = 'relative';
+      this.style.overflow = 'hidden';
+      this.appendChild(ripple);
+      
+      setTimeout(() => {
+        ripple.remove();
+      }, 600);
+    });
+  });
+});
+
+// Add ripple animation CSS
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes ripple {
+    to {
+      transform: scale(4);
+      opacity: 0;
+    }
+  }
+  
+  .dark-theme {
+    --gray-50: #0f172a;
+    --gray-100: #1e293b;
+    --gray-200: #334155;
+    --gray-300: #475569;
+    --gray-400: #64748b;
+    --gray-500: #94a3b8;
+    --gray-600: #cbd5e1;
+    --gray-700: #e2e8f0;
+    --gray-800: #f1f5f9;
+    --gray-900: #f8fafc;
+  }
+  
+  .dark-theme body {
+    background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+    color: var(--gray-800);
+  }
+  
+  .dark-theme .package-card,
+  .dark-theme .feature,
+  .dark-theme .ui-feature {
+    background: rgba(30, 41, 59, 0.8);
+    border-color: rgba(71, 85, 105, 0.3);
+  }
+  
+  .dark-theme .package-section {
+    background: rgba(30, 41, 59, 0.9);
+    border-color: rgba(71, 85, 105, 0.3);
+  }
+`;
+document.head.appendChild(style);
+
+// Console welcome message
+console.log(`
+🚀 Synapse Framework Documentation
+Built with love using Synapse itself!
+
+Features:
+✨ Beautiful animations and interactions
+🎨 Color psychology-based design
+📱 Fully responsive
+♿ Accessible design
+🌙 Dark mode support
+⚡ Lightning fast
+
+Visit: https://github.com/kluth/synapse-docs
+`);
+
+// Performance monitoring
+if ('performance' in window) {
+  window.addEventListener('load', () => {
+    const loadTime = performance.timing.loadEventEnd - performance.timing.navigationStart;
+    console.log(`📊 Page loaded in ${loadTime}ms`);
+  });
+}

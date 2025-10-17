@@ -1,0 +1,78 @@
+// Minimal wizard test
+console.log('Wizard test script loading...');
+
+class SynapseWizardTest {
+  constructor() {
+    console.log('Wizard test constructor called');
+    this.currentStep = 0;
+    this.steps = [
+      {
+        title: "Test Step 1",
+        description: "This is a test step",
+        content: "Test content goes here",
+        codeExample: "console.log('Hello World');"
+      }
+    ];
+    
+    this.init();
+  }
+  
+  init() {
+    console.log('Wizard test init called');
+    this.renderStep();
+    this.updateProgress();
+  }
+  
+  renderStep() {
+    console.log('Rendering step...');
+    const step = this.steps[this.currentStep];
+    const stepContainer = document.querySelector('.step-container');
+    
+    if (stepContainer) {
+      stepContainer.innerHTML = `
+        <h2>${step.title}</h2>
+        <p>${step.description}</p>
+        <div class="step-content">
+          ${step.content}
+        </div>
+        <div class="code-example">
+          <h4>Code Example:</h4>
+          <pre><code>${step.codeExample}</code></pre>
+          <button class="btn btn-secondary copy-code">Copy Code</button>
+        </div>
+        <div class="step-actions">
+          <button class="btn btn-outline prev-step">Previous</button>
+          <button class="btn btn-primary next-step">Next Step</button>
+        </div>
+      `;
+      console.log('Step rendered successfully');
+    } else {
+      console.log('Step container not found');
+    }
+  }
+  
+  updateProgress() {
+    console.log('Updating progress...');
+    const progressFill = document.querySelector('.progress-fill');
+    const progressText = document.querySelector('.progress-text');
+    
+    if (progressFill) {
+      const percentage = ((this.currentStep + 1) / this.steps.length) * 100;
+      progressFill.style.width = `${percentage}%`;
+      console.log('Progress fill updated:', percentage + '%');
+    }
+    
+    if (progressText) {
+      progressText.textContent = `Step ${this.currentStep + 1} of ${this.steps.length}`;
+      console.log('Progress text updated');
+    }
+  }
+}
+
+// Initialize when DOM is loaded
+document.addEventListener('DOMContentLoaded', () => {
+  console.log('DOM loaded, initializing wizard test...');
+  new SynapseWizardTest();
+});
+
+console.log('Wizard test script loaded');

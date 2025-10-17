@@ -1,0 +1,64 @@
+import { DocumentationService } from './index.js';
+import { writeFile, mkdir } from 'node:fs/promises';
+import { join } from 'node:path';
+
+async function generateStaticDocs() {
+  console.log('Generating static documentation...');
+  
+  const docs = new DocumentationService();
+  await docs.initialize();
+  
+  // Create output directory
+  await mkdir('./dist/docs', { recursive: true });
+  
+  // Generate HTML files for each page
+  const pages = [
+    { slug: 'index', title: 'Synapse Framework Documentation' },
+    { slug: 'getting-started', title: 'Getting Started' },
+    { slug: 'core', title: 'Core Framework' },
+    { slug: 'enterprise', title: 'Enterprise Features' },
+    { slug: 'nextgen', title: 'Next-Generation Features' },
+    { slug: 'futuristic', title: 'Futuristic Features' },
+    { slug: 'api', title: 'API Reference' },
+    { slug: 'examples', title: 'Examples & Tutorials' }
+  ];
+  
+  for (const page of pages) {
+    console.log(`Generating ${page.slug}.html...`);
+    
+    // This would generate static HTML files
+    // In a real implementation, you would render each page
+    const html = `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>${page.title} - Synapse Framework</title>
+    <style>
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; margin: 0; padding: 0; background: #f8fafc; }
+        .container { max-width: 1200px; margin: 0 auto; padding: 40px 20px; }
+        .header { text-align: center; margin-bottom: 40px; }
+        .header h1 { font-size: 3em; margin-bottom: 20px; color: #2d3748; }
+        .content { background: white; padding: 40px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>${page.title}</h1>
+        </div>
+        <div class="content">
+            <p>This is a placeholder for the ${page.title} content. In a real implementation, this would contain the full documentation content.</p>
+        </div>
+    </div>
+</body>
+</html>`;
+    
+    await writeFile(join('./dist/docs', `${page.slug}.html`), html);
+  }
+  
+  console.log('Static documentation generated successfully!');
+  console.log('Files created in ./dist/docs/');
+}
+
+generateStaticDocs().catch(console.error);

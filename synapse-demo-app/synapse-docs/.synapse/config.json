@@ -1,0 +1,11 @@
+{
+  "name": "synapse-docs",
+  "version": "0.1.0",
+  "template": "default",
+  "features": [
+    "typescript",
+    "testing"
+  ],
+  "created_at": "2025-10-17T16:03:44.791Z",
+  "last_modified": "2025-10-17T16:03:44.791Z"
+}

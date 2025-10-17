@@ -1,0 +1,1 @@
+/home/matthias/projects/synapse/packages/env-parser-rust/target/release/libsnps_env_parser_rust.so: /home/matthias/projects/synapse/packages/env-parser-rust/build.rs /home/matthias/projects/synapse/packages/env-parser-rust/src/lib.rs

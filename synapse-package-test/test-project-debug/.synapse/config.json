@@ -1,0 +1,11 @@
+{
+  "name": "test-project-debug",
+  "version": "0.1.0",
+  "template": "default",
+  "features": [
+    "typescript",
+    "testing"
+  ],
+  "created_at": "2025-10-17T15:52:59.417Z",
+  "last_modified": "2025-10-17T15:52:59.418Z"
+}

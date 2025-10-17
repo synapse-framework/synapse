@@ -1,0 +1,1 @@
+/home/matthias/projects/synapse/packages/commit-lint-rust/target/release/libsnps_commit_lint_rust.so: /home/matthias/projects/synapse/packages/commit-lint-rust/build.rs /home/matthias/projects/synapse/packages/commit-lint-rust/src/lib.rs

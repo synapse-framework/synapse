@@ -1,0 +1,1 @@
+/home/matthias/projects/synapse/packages/http-client-rust/target/release/libsnps_http_client_rust.so: /home/matthias/projects/synapse/packages/http-client-rust/build.rs /home/matthias/projects/synapse/packages/http-client-rust/src/lib.rs
