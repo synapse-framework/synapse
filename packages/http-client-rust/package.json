@@ -65,5 +65,14 @@
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.18.0"
+  },
+  "optionalDependencies": {
+    "@snps/http-client-rust-win32-x64-msvc": "0.1.0",
+    "@snps/http-client-rust-darwin-x64": "0.1.0",
+    "@snps/http-client-rust-linux-x64-gnu": "0.1.0",
+    "@snps/http-client-rust-linux-x64-musl": "0.1.0",
+    "@snps/http-client-rust-linux-arm64-gnu": "0.1.0",
+    "@snps/http-client-rust-darwin-arm64": "0.1.0",
+    "@snps/http-client-rust-linux-arm-gnueabihf": "0.1.0"
   }
 }

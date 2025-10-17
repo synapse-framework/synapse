@@ -71,5 +71,14 @@
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.18.0"
+  },
+  "optionalDependencies": {
+    "@snps/commit-lint-rust-win32-x64-msvc": "0.1.0",
+    "@snps/commit-lint-rust-darwin-x64": "0.1.0",
+    "@snps/commit-lint-rust-linux-x64-gnu": "0.1.0",
+    "@snps/commit-lint-rust-linux-x64-musl": "0.1.0",
+    "@snps/commit-lint-rust-linux-arm64-gnu": "0.1.0",
+    "@snps/commit-lint-rust-darwin-arm64": "0.1.0",
+    "@snps/commit-lint-rust-linux-arm-gnueabihf": "0.1.0"
   }
 }

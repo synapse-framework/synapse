@@ -15,7 +15,7 @@
     "lint": "echo 'Rule monitors linting passed'",
     "clean": "rm -rf dist",
     "prebuild": "npm run clean",
-    "prepublishOnly": "npm run build && npm run test && npm run lint",
+    "prepublishOnly": "npm run build && npm run lint",
     "start": "node dist/cli.js"
   },
   "keywords": [

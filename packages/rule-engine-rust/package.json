@@ -72,5 +72,14 @@
   },
   "devDependencies": {
     "@napi-rs/cli": "^2.18.0"
+  },
+  "optionalDependencies": {
+    "@snps/rule-engine-rust-win32-x64-msvc": "0.1.0",
+    "@snps/rule-engine-rust-darwin-x64": "0.1.0",
+    "@snps/rule-engine-rust-linux-x64-gnu": "0.1.0",
+    "@snps/rule-engine-rust-linux-x64-musl": "0.1.0",
+    "@snps/rule-engine-rust-linux-arm64-gnu": "0.1.0",
+    "@snps/rule-engine-rust-darwin-arm64": "0.1.0",
+    "@snps/rule-engine-rust-linux-arm-gnueabihf": "0.1.0"
   }
 }
