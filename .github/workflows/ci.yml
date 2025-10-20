@@ -112,7 +112,7 @@ jobs:
         run: cd packages/ui && npm run build-storybook
 
       - name: Upload build artifacts
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: build-artifacts
           path: |
@@ -177,7 +177,7 @@ jobs:
         run: npm run analyze:bundle
 
       - name: Upload performance results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: performance-results
           path: performance-results/
